@@ -1,14 +1,22 @@
 package com.afanasiev.telesens.simulate;
-import org.apache.log4j.Logger;
+
+import java.util.Date;
+
 
 /**
  * Created by oleg on 12/4/15.
  */
 public class Main {
-    private static Logger logger;
+
+    private static BusTrafficSimulator simulator;
+
     public static void main(String[] args) {
-        logger = Logger.getLogger(Main.class.getName());
-        logger.info("****************START SIMULATION****************");
-        logger.debug("****************FINISH SIMULATION****************");
+
+        simulator = new BusTrafficSimulator();
+        //System.out.println(simulator.allRoutesToString());
+
+        Date dtNow = new Date();
+
+        simulator.start(dtNow, DateTimeRepresenter.incHour(dtNow));
     }
 }

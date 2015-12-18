@@ -91,6 +91,11 @@ hs_err_pid*
 
 *.iws
 
+## Log files
+
+*.log
+*.out
+
 
 
 ## Plugin-specific files:
@@ -103,6 +108,9 @@ hs_err_pid*
 /controller/target/
 
 /dao/target/
+
+/log4j/
+/buss-traffic-simulation/log4j/*
 
 /model/target/
 # mpeltonen

@@ -24,36 +24,36 @@ public class Arc<T> {
         }
     }
 
-    private T nodeFirst;
-    private T nodeLast;
+    private T nodeLeft;
+    private T nodeRight;
     private int duration;
 
-    public Arc(T nodeFirst, T nodeLast, int duration) throws EqualNodesException {
-        if (nodeFirst.equals(nodeLast))
+    public Arc(T nodeLeft, T nodeRight, int duration) throws EqualNodesException {
+        if (nodeLeft.equals(nodeRight))
             throw new EqualNodesException("ErrorNodesInit! Two nodes must be differ");
 
         if (duration <= 0)
             throw new IllegalArgumentException("Incorrect duration for 'Arc'. Duration must be positive");
 
-        this.nodeFirst = nodeFirst;
-        this.nodeLast = nodeLast;
+        this.nodeLeft = nodeLeft;
+        this.nodeRight = nodeRight;
         this.duration = duration;
     }
 
-    public T getNodeFirst() {
-        return nodeFirst;
+    public T getNodeLeft() {
+        return nodeLeft;
     }
 
-    public T getNodeLast() {
-        return nodeLast;
+    public T getNodeRight() {
+        return nodeRight;
     }
 
     public T getOppositeNode(T node) {
-        if (nodeFirst.equals(node))
-            return nodeLast;
+        if (nodeLeft.equals(node))
+            return nodeRight;
 
-        if (nodeLast.equals(node))
-            return nodeFirst;
+        if (nodeRight.equals(node))
+            return nodeLeft;
 
         return null;
     }
@@ -63,6 +63,6 @@ public class Arc<T> {
     }
 
     public boolean contains(T node) {
-        return (nodeFirst.equals(node) || nodeLast.equals(node));
+        return (nodeLeft.equals(node) || nodeRight.equals(node));
     }
 }

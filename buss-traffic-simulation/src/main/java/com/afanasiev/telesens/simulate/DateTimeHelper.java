@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by oleg on 12/5/15.
  */
-public class DateTimeRepresenter {
+public class DateTimeHelper {
 
     private static final long ONE_MINUTE_IN_MILLIS = 60000; //milliseconds
 

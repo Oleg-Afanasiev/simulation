@@ -122,9 +122,9 @@ public class Route<T> implements Iterable<Arc<T>> {
             throw new IllegalArgumentException("Incorrect index of node");
 
         if (index == arcs.size())
-            return arcs.get(index - 1).getNodeLast();
+            return arcs.get(index - 1).getNodeRight();
         else
-            return arcs.get(index).getNodeFirst();
+            return arcs.get(index).getNodeLeft();
     }
 
     public void addFirstNode(T node) {
@@ -190,7 +190,7 @@ public class Route<T> implements Iterable<Arc<T>> {
         sb.append(String.format("Route \"%s\" %s, %s: %n", number, type, direct));
 
         for (Arc<T> arc : arcs)
-            sb.append(String.format("-[%s, %s]-", arc.getNodeFirst(), arc.getNodeLast()));
+            sb.append(String.format("-[%s, %s]-", arc.getNodeLeft(), arc.getNodeRight()));
 
         return sb.toString();
     }

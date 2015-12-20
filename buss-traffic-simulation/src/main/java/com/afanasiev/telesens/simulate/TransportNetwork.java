@@ -7,10 +7,10 @@ import java.util.Date;
 /**
  * Created by oleg on 12/9/15.
  */
-public class TransportNetwork implements Observer {
+public class TransportNetwork implements Observer, TransportMap {
 
     private Collection<Arc<Station>> arcs;
-    private Collection<Route> routes;
+    private Collection<Route<Station>> routes;
 
     public TransportNetwork() {
         arcs = new ArrayList<>();
@@ -46,12 +46,8 @@ public class TransportNetwork implements Observer {
         return null;
     }
 
-    public void removeStation() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void addStation() {
-        throw new UnsupportedOperationException();
+    public Collection<Route<Station>> getAllRoutes() {
+        return routes;
     }
 
     public String allRoutesToString() {
@@ -61,6 +57,26 @@ public class TransportNetwork implements Observer {
             sb.append(String.format("%s %n%n", route));
 
         return sb.toString();
+    }
+
+    public void removeStation() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void addStation() {
+        throw new UnsupportedOperationException();
+    }
+
+    public Station getStationById(long id) {
+        for (Route<Station> route : routes) {
+            for (Arc<Station> arc : route)
+                if (arc.getNodeLeft().getID() == id)
+                    return arc.getNodeLeft();
+                else if (arc.getNodeRight().getID() == id)
+                    return arc.getNodeRight();
+        }
+
+        return null;
     }
 
     public void tick(Date dateTime) {
@@ -76,15 +92,16 @@ public class TransportNetwork implements Observer {
         Station finishNode;
 
         for (Arc<Station> arc : arcs) {
-            startNode = arc.getNodeFirst();
+            startNode = arc.getNodeLeft();
                 if (!listOfStations.contains(startNode))
                     listOfStations.add(startNode);
 
-            finishNode = arc.getNodeLast();
+            finishNode = arc.getNodeRight();
                 if (!listOfStations.contains(finishNode))
                     listOfStations.add(finishNode);
         }
 
         return listOfStations;
     }
+
 }

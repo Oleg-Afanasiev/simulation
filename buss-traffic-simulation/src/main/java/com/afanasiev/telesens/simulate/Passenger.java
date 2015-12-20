@@ -23,6 +23,10 @@ public class Passenger implements Observer {
         reportCollector = ReportCollector.getInstance();
     }
 
+    public long getID() {
+        return ID;
+    }
+
     public boolean welcomeToBus(Route route) {
         return true;
     }
@@ -31,12 +35,16 @@ public class Passenger implements Observer {
         reportCollector.sendMessage(this.toString(), "tick");
     }
 
+    public long getTargetId() {
+        return stationToID;
+    }
+
     public boolean isTarget(Station station) {
         return station.getID() == stationToID;
     }
 
     public void delivered(Station station) {
-        reportCollector.sendMessage(this.toString(), "delivered to " + station.toString());
+        reportCollector.sendMessage(this.toString(), "Вышел на остановке \"" + station.toString() + "\"");
     }
 
     @Override

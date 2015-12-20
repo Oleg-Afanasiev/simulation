@@ -17,6 +17,6 @@ public class Main {
 
         Date dtNow = new Date();
 
-        simulator.start(dtNow, DateTimeRepresenter.incHour(dtNow));
+        simulator.start(dtNow, DateTimeHelper.incHours(dtNow, 2));
     }
 }

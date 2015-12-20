@@ -1,38 +1,40 @@
 package com.afanasiev.telesens.simulate;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by oleg on 12/10/15.
  */
-public class RouteDispatcher implements Observer {
+public class RouteDispatcher implements Observer{
 
     private final int BUS_CAPACITY = 43; // bad idea (not here)
 
     private ReportCollector reportCollector;
-    private int interval = 7; // min
+    private int runInterval = 17; // min
     private Route routeForward;
     private Route routeBack;
 
     private int countBuses;
-    private int breakInterval = 15; // min
+    private int breakForwardInterval = 10; // min
+    private int breakBackInterval = 10;
     private List<Bus> freeBuses;
     private List<BusRun> busesInRunning;
     private Date timeFrom;
 
     public RouteDispatcher(Route route) {
-        this(route, null);
+        init();
+        registerCircularRoute(route);
     }
 
     public RouteDispatcher(Route routeForward, Route routeBack) {
+        init();
+        registerSimpleRoute(routeForward, routeBack);
+    }
+
+    private void init() {
         reportCollector = ReportCollector.getInstance();
         freeBuses = new ArrayList<>();
         busesInRunning = new ArrayList<>();
-
-        registerSimpleRoute(routeForward, routeBack);
     }
 
     public void registerCircularRoute(Route route) {
@@ -52,10 +54,7 @@ public class RouteDispatcher implements Observer {
     }
 
     public void tick(Date curTime) {
-        reportCollector.sendMessage(this.toString(),
-                String.format("Маршрут № %s %s - %s %s, кол-во автобусов: в рейсе %d, свободных: %d",
-                        routeForward.getNumber(), routeForward.getDirect(), routeBack.getNumber(), routeBack.getDirect(),
-                        busesInRunning.size(), freeBuses.size()));
+        printReport();
 
         for (BusRun busRun : busesInRunning)
             busRun.tick(curTime);
@@ -63,10 +62,25 @@ public class RouteDispatcher implements Observer {
         if (timeFrom == null)
             timeFrom = curTime;
 
-        int diffMinutes = DateTimeRepresenter.diffMinutes(timeFrom, curTime);
+        checkRunBuses();
 
-        if (diffMinutes % interval == 0)
+        int diffMinutes = DateTimeHelper.diffMinutes(timeFrom, curTime);
+
+        if (diffMinutes % runInterval == 0)
             runNextBus(curTime);
+    }
+
+    private void printReport() {
+        if (routeForward.getType() == TypeOfRoute.SIMPLE)
+            reportCollector.sendMessage(this.toString(),
+                    String.format("Маршрут № %s %s - %s %s, кол-во автобусов: в рейсе %d, свободных: %d",
+                            routeForward.getNumber(), routeForward.getDirect(), routeBack.getNumber(), routeBack.getDirect(),
+                            busesInRunning.size(), freeBuses.size()));
+        else
+            reportCollector.sendMessage(this.toString(),
+                    String.format("Маршрут № %s %s, кол-во автобусов: в рейсе %d, свободных: %d",
+                            routeForward.getNumber(), routeForward.getDirect(), busesInRunning.size(), freeBuses.size()));
+
     }
 
     private void runNextBus(Date curTime) {
@@ -85,10 +99,23 @@ public class RouteDispatcher implements Observer {
         Bus bus = freeBuses.get(0);
         freeBuses.remove(0);
 
-        BusRun busRun = new BusRun(routeForward, routeBack, bus, breakInterval);
+        BusRun busRun = new BusRun(routeForward, routeBack, bus, breakForwardInterval, breakBackInterval);
         busesInRunning.add(busRun);
 
         busRun.start(curTime);
+    }
+
+    private void checkRunBuses() {
+        Iterator<BusRun> busRunIterator = busesInRunning.iterator();
+        BusRun next;
+
+        while (busRunIterator.hasNext()) {
+            next = busRunIterator.next();
+            if (next.isCompleted()) {
+                busRunIterator.remove();
+                freeBuses.add(next.getBus());
+            }
+        }
     }
 
     @Override

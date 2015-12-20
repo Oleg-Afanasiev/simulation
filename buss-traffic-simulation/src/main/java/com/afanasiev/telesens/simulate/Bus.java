@@ -1,6 +1,7 @@
 package com.afanasiev.telesens.simulate;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,11 +41,15 @@ public class Bus {
         passengers.addAll(satisfiedPassengers);
     }
 
-    public void debusPassengerOut(Station station) {
-        for (Passenger passenger : passengers) {
+    public void debusPassengersOut(Station station) {
+        Iterator<Passenger> iterator = passengers.iterator();
+        Passenger passenger;
+
+        while (iterator.hasNext()) {
+            passenger = iterator.next();
             if (passenger.isTarget(station)) {
-                passengers.remove(passenger);
                 passenger.delivered(station);
+                iterator.remove();
             }
         }
     }

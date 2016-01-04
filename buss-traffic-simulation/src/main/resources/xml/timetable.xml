@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_60" class="java.beans.XMLDecoder">
+ <object class="com.telesens.afanasiev.loader.TimeTable" id="TimeTable0">
+  <void property="queueMapOfTasks">
+   <void method="put">
+    <long>1</long>
+    <object class="java.util.PriorityQueue">
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448946000000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448946420000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448946840000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448947260000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448947680000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448948100000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448948520000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448948940000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448949360000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448949780000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448950200000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448950620000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448951040000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448951460000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448951880000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448952300000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448952720000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448953140000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+    </object>
+   </void>
+  </void>
+ </object>
+</java>

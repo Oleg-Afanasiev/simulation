@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_60" class="java.beans.XMLDecoder">
+ <object class="com.telesens.afanasiev.loader.TimeTable" id="TimeTable0">
+  <void property="queueMapOfTasks">
+   <void method="put">
+    <long>1</long>
+    <object class="java.util.PriorityQueue">
+     <void method="add">
+      <object class="com.telesens.afanasiev.loader.TimeTableUnit">
+       <void property="breakForwardDuration">
+        <int>5</int>
+       </void>
+       <void property="idRoute">
+        <long>1</long>
+       </void>
+       <void property="timeStart">
+        <object class="java.util.Date">
+         <long>1448946000000</long>
+        </object>
+       </void>
+      </object>
+     </void>
+    </object>
+   </void>
+  </void>
+ </object>
+</java>

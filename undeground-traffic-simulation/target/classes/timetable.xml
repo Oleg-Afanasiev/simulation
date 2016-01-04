@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_60" class="java.beans.XMLDecoder">
+ <object class="com.telesens.afanasiev.TimeTable" id="TimeTable0">
+  <void property="queueTasks">
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object class="com.telesens.afanasiev.Station" id="Station0">
+       <void property="ID">
+        <long>4</long>
+       </void>
+       <void property="name">
+        <string>Барабашова</string>
+       </void>
+       <void property="passengersCountInHour">
+        <int>4000</int>
+       </void>
+      </object>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450944000546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450944240546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450944480546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450944720546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450944960546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450945200546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450945440546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450945680546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450945920546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450946160546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450946400546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450946640546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450946880546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450947120546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450947360546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450947600546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450947840546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450948080546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450948320546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450948560546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450948800546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450949040546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450949280546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450949520546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450949760546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450950000546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450950240546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450950480546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450950720546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450950960546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.TrainTask">
+     <void property="startFromNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="timeStart">
+      <object class="java.util.Date">
+       <long>1450951200546</long>
+      </object>
+     </void>
+    </object>
+   </void>
+  </void>
+ </object>
+</java>

@@ -1,9 +1,9 @@
 package com.telesens.afanasiev.simulator;
 
 import com.telesens.afanasiev.helper.DaoUtils;
-import com.telesens.afanasiev.helper.DateTimeHelper;
 import com.telesens.afanasiev.loader.TimeTableUnit;
-import com.telesens.afanasiev.reporter.ReportCollector;
+import com.telesens.afanasiev.reporter.LogCollector;
+import com.telesens.afanasiev.reporter.RouteReporter;
 
 import java.util.*;
 
@@ -14,39 +14,39 @@ public class RouteDispatcher implements Observer{
 
     private final int BUS_CAPACITY = 43; // bad idea (not here)
 
-    private ReportCollector reportCollector;
+    private RouteReporter reportCollector;
 
-    private Route routeForward;
-    private Route routeBack;
-    
-    private List<Bus> freeBuses;
+    private Route<Station> routeForward;
+    private Route<Station> routeBack;
+
+    private List<Bus> waitingBuses;
     private List<BusRun> busesInRunning;
     private Date timeFrom;
 
-    public RouteDispatcher(Route route) {
+    public RouteDispatcher(Route<Station> route) {
         init();
         registerCircularRoute(route);
     }
 
-    public RouteDispatcher(Route routeForward, Route routeBack) {
+    public RouteDispatcher(Route<Station> routeForward, Route<Station> routeBack) {
         init();
         registerSimpleRoute(routeForward, routeBack);
     }
 
     private void init() {
-        reportCollector = ReportCollector.getInstance();
-        freeBuses = new ArrayList<>();
+        reportCollector = LogCollector.getInstance();
+        waitingBuses = new ArrayList<>();
         busesInRunning = new ArrayList<>();
     }
 
-    public void registerCircularRoute(Route route) {
+    public void registerCircularRoute(Route<Station> route) {
         if (route.getType() != TypeOfRoute.CIRCULAR)
             throw new IllegalArgumentException("Incorrect type of route.");
 
         this.routeForward = route;
     }
 
-    public void registerSimpleRoute(Route routeForward, Route routeBack) {
+    public void registerSimpleRoute(Route<Station> routeForward, Route<Station> routeBack) {
         if (routeForward.getFirstNode() != routeBack.getLastNode() ||
                 routeForward.getLastNode() != routeBack.getFirstNode())
             throw new IllegalArgumentException("Incorrect pair of routes.");
@@ -73,19 +73,18 @@ public class RouteDispatcher implements Observer{
 
     private void printReport() {
         if (routeForward.getType() == TypeOfRoute.SIMPLE)
-            reportCollector.sendMessage(this.toString(),
-                    String.format("Маршрут № %s %s - %s %s, кол-во автобусов: в рейсе %d, свободных: %d",
-                            routeForward.getNumber(), routeForward.getDirect(), routeBack.getNumber(), routeBack.getDirect(),
-                            busesInRunning.size(), freeBuses.size()));
+            reportCollector.sendRouteLog(String.format("%s %s - %s %s",
+                            routeForward.getNumber(), routeForward.getDirect(), routeBack.getNumber(), routeBack.getDirect()),
+                    busesInRunning.size(), waitingBuses.size());
         else
-            reportCollector.sendMessage(this.toString(),
-                    String.format("Маршрут № %s %s, кол-во автобусов: в рейсе %d, свободных: %d",
-                            routeForward.getNumber(), routeForward.getDirect(), busesInRunning.size(), freeBuses.size()));
+            reportCollector.sendRouteLog(String.format("%s %s",
+                            routeForward.getNumber(), TypeOfRoute.CIRCULAR.toString()),
+                    busesInRunning.size(), waitingBuses.size());
 
     }
 
     public void runNextBus(TimeTableUnit timeTableUnit) {
-        if (freeBuses.size() == 0) {
+        if (waitingBuses.size() == 0) {
             Random random = new Random();
             Bus bus = new Bus(BUS_CAPACITY, "АX-" + (random.nextInt(8999) + 1000) + "-AA");
             try {
@@ -94,11 +93,11 @@ public class RouteDispatcher implements Observer{
                 exc.printStackTrace();
             }
 
-            freeBuses.add(bus);
+            waitingBuses.add(bus);
         }
 
-        Bus bus = freeBuses.get(0);
-        freeBuses.remove(0);
+        Bus bus = waitingBuses.get(0);
+        waitingBuses.remove(0);
 
         BusRun busRun = new BusRun(routeForward, routeBack, bus, timeTableUnit.getBreakForwardDuration(), timeTableUnit.getBreakBackDuration());
         busesInRunning.add(busRun);
@@ -114,7 +113,7 @@ public class RouteDispatcher implements Observer{
             next = busRunIterator.next();
             if (next.isCompleted()) {
                 busRunIterator.remove();
-                freeBuses.add(next.getBus());
+                waitingBuses.add(next.getBus());
             }
         }
     }

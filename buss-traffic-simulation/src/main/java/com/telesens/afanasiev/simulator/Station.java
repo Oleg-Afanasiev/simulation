@@ -1,28 +1,41 @@
 package com.telesens.afanasiev.simulator;
 
-import com.telesens.afanasiev.reporter.ReportCollector;
+import com.telesens.afanasiev.reporter.LogCollector;
+import com.telesens.afanasiev.reporter.StationReporter;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by oleg on 12/5/15.
  */
-public class Station implements Observer {
-    private ReportCollector reportCollector;
+public class Station implements Observer, Serializable {
+    private static final long serialVersionUID = 1;
+
+    private transient StationReporter logCollector;
     private TransportMap transportNetWork;
     private long ID;
     private String name;
-    private LinkedList<Passenger> queueOfPassengers;
+    private transient LinkedList<Passenger> queueOfPassengers;
+
+    public Station() {
+        logCollector = LogCollector.getInstance();
+        queueOfPassengers = new LinkedList<>();
+    }
 
     public Station(String name, TransportMap transportNetWork) {
         this.name = name;
         this.transportNetWork = transportNetWork;
-        reportCollector = ReportCollector.getInstance();
+        logCollector = LogCollector.getInstance();
         queueOfPassengers = new LinkedList<>();
     }
 
     public long getID() {
         return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
     }
 
     public String getName() {
@@ -33,39 +46,35 @@ public class Station implements Observer {
         this.name = name;
     }
 
+    public TransportMap getTransportNetWork() {
+        return transportNetWork;
+    }
+
+    public void setTransportNetWork(TransportMap transportNetWork) {
+        this.transportNetWork = transportNetWork;
+    }
+
     public void addPassengers(Collection<Passenger> passengers) {
-        Station targetStation;
 
         for (Passenger passenger : passengers) {
             queueOfPassengers.addLast(passenger);
-            targetStation = transportNetWork.getStationById(passenger.getTargetId());
-
-            reportCollector.sendMessage(this.toString(),
-                    String.format("Пассажир ID: %d, пришел на остановку \"%s\". Ему нужно на: \"%s\"",
-                            passenger.getID(), this.getName(), targetStation.getName()));
-
-            reportCollector.sendMessage(this.toString(),
-                    String.format("Кол-во пассажиров на остановке %d", queueOfPassengers.size()));
+            passenger.welcomeToStation(this);
+            logCollector.sendStationLogQueueSize(ID, name, queueOfPassengers.size());
         }
     }
 
-    public Collection<Passenger> welcomeToBus(Bus bus, Route route) {
-        reportCollector.sendMessage(this.toString(),
-                String.format("Прибыл автобус № %s, маршрут № %s - %s, свободных мест %d",
-                        bus.getNumber(), route.getNumber(), route.getDirect(), bus.getFreeSeats()));
+    public Collection<Passenger> welcomeToBus(Bus bus, Route route, int getOffPassCount, Date actualTime) {
 
         Collection<Passenger> leavingPassengers = new ArrayList<>();
 
-        for (int i = 0; i < bus.getFreeSeats() && i < queueOfPassengers.size(); i++) {
-            if (queueOfPassengers.get(i).welcomeToBus(route))
+        for (int i = 0; i < bus.getFreeSeatsCount() && i < queueOfPassengers.size(); i++) {
+            if (queueOfPassengers.get(i).welcomeToBus(route, bus.getNumber(), actualTime))
                 leavingPassengers.add(queueOfPassengers.get(i));
         }
 
         queueOfPassengers.removeAll(leavingPassengers);
-
-        reportCollector.sendMessage(this.toString(),
-                String.format("В автобус № %s сели %d пассажиров, осталось на остановке %d",
-                        bus.getNumber(), leavingPassengers.size(), queueOfPassengers.size()));
+        logCollector.sendStationLogBusArrived(ID, name, route.getID(), route.getNumber(), route.getDirect().toString(),
+                bus.getNumber(), bus.getFreeSeatsCount(), getOffPassCount, leavingPassengers.size(), queueOfPassengers.size());
 
         return leavingPassengers;
     }
@@ -77,10 +86,9 @@ public class Station implements Observer {
         while(iterator.hasNext()) {
             nextPass = iterator.next();
             nextPass.tick(curTime);
-            if (nextPass.getLimitTimeExpection() == 0) {
-                reportCollector.sendMessage(this.toString(),
-                        String.format("Пассажир [ID = %d] покинул остановку", nextPass.getID()));
+            if (nextPass.getLimitTimeWaiting() == 0) {
                 iterator.remove();
+                logCollector.sendStationLogPassLeft(ID, name, nextPass.getID(), queueOfPassengers.size());
             }
         }
     }

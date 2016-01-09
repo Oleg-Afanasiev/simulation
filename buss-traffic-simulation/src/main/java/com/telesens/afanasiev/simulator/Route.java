@@ -1,5 +1,6 @@
 package com.telesens.afanasiev.simulator;
 
+import java.io.Serializable;
 import java.util.*;
 
 enum TypeOfRoute {
@@ -10,6 +11,11 @@ enum TypeOfRoute {
 
     TypeOfRoute(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
 
@@ -32,7 +38,7 @@ enum Direct {
 /**
  * Created by oleg on 12/7/15.
  */
-public class Route<T> implements Iterable<Arc<T>> {
+public class Route<T> implements Iterable<Arc<T>>, Serializable {
     class RouteIterator implements Iterator<Arc<T>> {
         private int iteratorCursor = -1;
 
@@ -48,6 +54,7 @@ public class Route<T> implements Iterable<Arc<T>> {
         }
     }
 
+    private static final long serialVersionUID = 1;
     private long ID;
 
     private String number;
@@ -55,10 +62,15 @@ public class Route<T> implements Iterable<Arc<T>> {
     private List<Arc<T>> arcs;
     private Direct direct;
     private double cost;
-    private T startNode;
+    private T firstNode;
 
 
-    public Route(String number, String description, Direct direct, double cost, T startNode, Arc<T>...listArcs) {
+    public Route() {
+        arcs = new ArrayList<>();
+    }
+
+    @SafeVarargs
+    public Route(String number, String description, Direct direct, double cost, T firstNode, Arc<T>...listArcs) {
 
         if (number == null || number.equals(""))
             throw new IllegalArgumentException("Incorrect number for 'Route'.");
@@ -69,15 +81,15 @@ public class Route<T> implements Iterable<Arc<T>> {
         if (listArcs.length == 0)
             throw new IllegalArgumentException("Incorrect listArcs for 'Route'. The route must contain as less one arc.");
 
-        if (!listArcs[0].contains(startNode))
-            throw new IllegalArgumentException("Incorrect sequence of 'listArgs' for 'Route'. The first arc must contain 'startNode'.");
+        if (!listArcs[0].contains(firstNode))
+            throw new IllegalArgumentException("Incorrect sequence of 'listArgs' for 'Route'. The first arc must contain 'firstNode'.");
 
         this.number = number;
         this.description = description;
         this.direct = direct;
-        this.startNode = startNode;
+        this.firstNode = firstNode;
 
-        T prevNode = startNode;
+        T prevNode = firstNode;
         arcs = new ArrayList<>();
 
         for (Arc<T> nextArc : listArcs)
@@ -93,12 +105,40 @@ public class Route<T> implements Iterable<Arc<T>> {
         return ID;
     }
 
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
     public String getNumber() {
         return number;
     }
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Arc<T>> getArcs() {
+        return arcs;
+    }
+
+    public void setArcs(List<Arc<T>> arcs) {
+        this.arcs = arcs;
+    }
+
+    public Direct getDirect() {
+        return direct;
+    }
+
+    public void setDirect(Direct direct) {
+        this.direct = direct;
     }
 
     public double getCost() {
@@ -110,7 +150,11 @@ public class Route<T> implements Iterable<Arc<T>> {
     }
 
     public T getFirstNode() {
-        return startNode;
+        return firstNode;
+    }
+
+    public void setFirstNode(T firstNode) {
+        this.firstNode = firstNode;
     }
 
     public T getLastNode() {
@@ -150,10 +194,6 @@ public class Route<T> implements Iterable<Arc<T>> {
             return TypeOfRoute.SIMPLE;
     }
 
-    public Direct getDirect() {
-        return direct;
-    }
-
     @Override
     public Iterator<Arc<T>> iterator() {
         return new RouteIterator();
@@ -171,9 +211,9 @@ public class Route<T> implements Iterable<Arc<T>> {
         if (!description.equals(""))
             sb.append(String.format("%s %n", description));
 
-        T prevNode = startNode;
+        T prevNode = firstNode;
 
-        sb.append(String.format("%3s%s%n", " ", startNode));
+        sb.append(String.format("%3s%s%n", " ", firstNode));
 
         for (Arc<T> arc : arcs) {
             sb.append(String.format("%3s%s%n", " ", arc.getOppositeNode(prevNode)));

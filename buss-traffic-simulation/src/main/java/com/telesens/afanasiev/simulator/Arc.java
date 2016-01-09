@@ -1,9 +1,13 @@
 package com.telesens.afanasiev.simulator;
 
+import java.io.Serializable;
+
 /**
  * Created by oleg on 12/5/15.
  */
-public class Arc<T> {
+public class Arc<T> implements Serializable {
+    private static final long serialVerionUID = 1L;
+
     public static class EqualNodesException extends RuntimeException {
         private String msg;
         private String baseMsg = "ErrorNodesInit! Two nodes must be differ";
@@ -28,6 +32,10 @@ public class Arc<T> {
     private T nodeRight;
     private int duration;
 
+    public Arc() {
+
+    }
+
     public Arc(T nodeLeft, T nodeRight, int duration) throws EqualNodesException {
         if (nodeLeft.equals(nodeRight))
             throw new EqualNodesException("ErrorNodesInit! Two nodes must be differ");
@@ -48,6 +56,22 @@ public class Arc<T> {
         return nodeRight;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setNodeLeft(T nodeLeft) {
+        this.nodeLeft = nodeLeft;
+    }
+
+    public void setNodeRight(T nodeRight) {
+        this.nodeRight = nodeRight;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     public T getOppositeNode(T node) {
         if (nodeLeft.equals(node))
             return nodeRight;
@@ -56,10 +80,6 @@ public class Arc<T> {
             return nodeLeft;
 
         return null;
-    }
-
-    public int getDuration() {
-        return duration;
     }
 
     public boolean contains(T node) {

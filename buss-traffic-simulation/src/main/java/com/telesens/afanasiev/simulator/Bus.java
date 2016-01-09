@@ -1,16 +1,13 @@
 package com.telesens.afanasiev.simulator;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by oleg on 12/18/15.
  */
 public class Bus {
     private long ID;
-    private int CAPACITY;
+    private final int CAPACITY;
 
     private String number;
     private List<Passenger> passengers;
@@ -29,11 +26,11 @@ public class Bus {
         return number;
     }
 
-    public int getFreeSeats() {
+    public int getFreeSeatsCount() {
         return CAPACITY - passengers.size();
     }
 
-    public int getCountPassengers() {
+    public int getPassengersCount() {
         return passengers.size();
     }
 
@@ -41,7 +38,11 @@ public class Bus {
         passengers.addAll(satisfiedPassengers);
     }
 
-    public int debusPassengersOut(Station station) {
+    public int getCapatity() {
+        return CAPACITY;
+    }
+
+    public int getOffPassengers(Station station, Date actualTime) {
         Iterator<Passenger> iterator = passengers.iterator();
         Passenger passenger;
         int passCount = 0;
@@ -49,7 +50,7 @@ public class Bus {
         while (iterator.hasNext()) {
             passenger = iterator.next();
             if (passenger.isTarget(station)) {
-                passenger.delivered(station);
+                passenger.delivered(this, station, actualTime);
                 iterator.remove();
                 passCount++;
             }

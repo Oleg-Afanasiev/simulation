@@ -1,6 +1,8 @@
 package com.telesens.afanasiev.simulator;
 
 import com.telesens.afanasiev.helper.DateTimeHelper;
+import com.telesens.afanasiev.reporter.ClockReporter;
+import com.telesens.afanasiev.reporter.LogCollector;
 
 import java.util.Date;
 
@@ -8,22 +10,25 @@ import java.util.Date;
  * Created by oleg on 12/4/15.
  */
 public class Clock {
-    private Date curTime;
+    private Date actualTime;
+    private ClockReporter reportCollector;
 //    private final int ONE_MINUTE_IN_MILLIS = 60000; //milliseconds
 //    private final int TICK_STEP = 1 * ONE_MINUTE_IN_MILLIS;  // 1 minute
 
     public Clock(Date dateTimeStart) {
-        curTime = DateTimeHelper.roundByMinutes(dateTimeStart);
+        actualTime = DateTimeHelper.roundByMinutes(dateTimeStart);
+        reportCollector = LogCollector.getInstance();
     }
 
-    public Date getCurTime() {
-        return curTime;
+    public Date getActualTime() {
+        return actualTime;
     }
 
     /**
-     * Incrementing of curTime always equals 1 minute
+     * Step incrementing of time always equals 1 minute
      */
     public void doTick() {
-        curTime = DateTimeHelper.incMinute(curTime);
+        actualTime = DateTimeHelper.incMinute(actualTime);
+        reportCollector.sendLogTick(actualTime);
     }
 }

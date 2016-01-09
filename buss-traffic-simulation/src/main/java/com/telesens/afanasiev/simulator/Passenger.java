@@ -1,7 +1,7 @@
 package com.telesens.afanasiev.simulator;
 
-import com.telesens.afanasiev.helper.DateTimeHelper;
-import com.telesens.afanasiev.reporter.ReportCollector;
+import com.telesens.afanasiev.reporter.PassengerReporter;
+import com.telesens.afanasiev.reporter.LogCollector;
 
 import java.util.Date;
 
@@ -11,54 +11,66 @@ import java.util.Date;
 public class Passenger implements Observer {
     private long ID;
     private String name;
-    private long stationIdFrom;
-    private long stationIdTo;
-    private ReportCollector reportCollector;
-    private int limitTimeExpection;
+    private long stationFromId;
+    private long stationTargetId;
+    private PassengerReporter reportCollector;
+    private Date timeComeInBus;
+    private Date timeGoOffBus;
+    private int limitTimeWaiting;
+    private TransportMap transportMap;
 
-    public Passenger(long stationIdFrom, long stationIdTo, int limitTimeExpection) {
-        this("", stationIdFrom, stationIdTo, limitTimeExpection);
+    public Passenger(long stationFromId, long stationTargetId, int limitTimeWaiting) {
+        this("", stationFromId, stationTargetId, limitTimeWaiting);
     }
 
-    public Passenger(String name, long stationIdFrom, long stationIdTo, int limitTimeExpection) {
+    public Passenger(String name, long stationFromId, long stationTargetId, int limitTimeWaiting) {
         this.name = name;
-        this.stationIdFrom = stationIdFrom;
-        this.stationIdTo = stationIdTo;
-        this.limitTimeExpection = limitTimeExpection;
+        this.stationFromId = stationFromId;
+        this.stationTargetId = stationTargetId;
+        this.limitTimeWaiting = limitTimeWaiting;
 
-        reportCollector = ReportCollector.getInstance();
+        reportCollector = LogCollector.getInstance();
+        transportMap = TransportNetwork.getInstance();
     }
 
     public long getID() {
         return ID;
     }
 
-    public int getLimitTimeExpection() {
-        return limitTimeExpection;
+    public int getLimitTimeWaiting() {
+        return limitTimeWaiting;
     }
 
     public long getTargetId() {
-        return stationIdTo;
+        return stationTargetId;
     }
 
     public boolean isTarget(Station station) {
-        return station.getID() == stationIdTo;
+        return station.getID() == stationTargetId;
     }
 
-    public void delivered(Station station) {
-        reportCollector.sendMessage(this.toString(), "Вышел на остановке \"" + station.toString() + "\"");
+    public void delivered(Bus bus, Station station, Date actualTime) {
+        timeGoOffBus = actualTime;
+        reportCollector.sendPassLogDelivered(this.ID, station.getID(), station.getName(), bus.getNumber(), timeComeInBus, timeGoOffBus);
     }
 
-    public boolean welcomeToBus(Route route) {
+    public void welcomeToStation(Station stationFrom) {
+        reportCollector.sendPassLogWelcomeToStation(ID, name, stationFrom.getID(), stationFrom.getName(),
+                stationTargetId, transportMap.getStationById(stationTargetId).getName());
+    }
+
+    public boolean welcomeToBus(Route route, String busNumber, Date actualTime) {
+        timeComeInBus = actualTime;
+        reportCollector.sendPassLogWelcomeToBus(ID, stationFromId, busNumber);
         return true;
     }
 
     public void tick(Date curTime) {
-        limitTimeExpection--;
+        limitTimeWaiting--;
 
-        if (limitTimeExpection == 0)
-            reportCollector.sendMessage(this.toString(), String.format(
-                    "Не дождался автобуса"));
+//        if (limitTimeWaiting == 0)
+//            reportCollector.sendLogMessage(this.toString(), String.format(
+//                    "Не дождался автобуса"));
     }
 
     @Override

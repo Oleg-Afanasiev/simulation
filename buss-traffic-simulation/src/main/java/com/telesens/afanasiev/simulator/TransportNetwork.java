@@ -2,35 +2,70 @@ package com.telesens.afanasiev.simulator;
 
 import com.telesens.afanasiev.helper.DaoUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
+import java.beans.XMLDecoder;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * Created by oleg on 12/9/15.
  */
-public class TransportNetwork implements Observer, TransportMap {
+public class TransportNetwork implements Observer, TransportMap, Serializable {
 
-    private Collection<Arc<Station>> arcs;
+    private static final long seraialVersionUID = 1L;
+    private volatile static TransportNetwork uniqueInstance;
+
+    private Set<Arc<Station>> arcs;
     private Collection<Route<Station>> routes;
 
     public TransportNetwork() {
-        arcs = new ArrayList<>();
+        arcs = new HashSet<>();
         routes = new ArrayList<>();
     }
 
-    public void addArc(Arc<Station> arc) {
-        arcs.add(arc);
+    public static TransportNetwork getInstance() {
+        if (uniqueInstance == null) {
+            synchronized (TransportNetwork.class) {
+                if (uniqueInstance == null)
+                    uniqueInstance = new TransportNetwork();
+            }
+        }
+
+        return uniqueInstance;
     }
 
-    public void createRoute(long id, String name, String description, Direct direct, double cost, Station startStation, Arc<Station>...listArcs)
-        throws NoSuchFieldException, IllegalAccessException {
-        for (Arc<Station> arc:listArcs)
-            if (!arcs.contains(arc))
-                arcs.add(arc);
+    public Set<Arc<Station>> getArcs() {
+        return arcs;
+    }
 
-        Route route = new Route(name, description, direct, cost, startStation, listArcs);
+    public void setArcs(Set<Arc<Station>> arcs) {
+        this.arcs = arcs;
+    }
+
+    public Collection<Route<Station>> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(Collection<Route<Station>> routes) {
+        this.routes = routes;
+    }
+
+    @SafeVarargs
+    public final void createRoute(long id, String name, String description, Direct direct, double cost, Station startStation, Arc<Station>...listArcs)
+        throws NoSuchFieldException, IllegalAccessException {
+
+        arcs.addAll(Arrays.asList(listArcs));
+
+        Route<Station> route = new Route<>(name, description, direct, cost, startStation, listArcs);
         DaoUtils.setPrivateField(route, "ID", id);
+
+        routes.add(route);
+    }
+
+    public void addRoute(Route<Station> route) {
+        for (Arc<Station> arc : route)
+            arcs.add(arc);
 
         routes.add(route);
     }
@@ -108,6 +143,12 @@ public class TransportNetwork implements Observer, TransportMap {
         }
 
         return listOfStations;
+    }
+
+    private void addArcs(Arc<Station>...listArcs) {
+        for (Arc<Station> arc : listArcs)
+            if (!arcs.contains(arc))
+                arcs.add(arc);
     }
 
 }

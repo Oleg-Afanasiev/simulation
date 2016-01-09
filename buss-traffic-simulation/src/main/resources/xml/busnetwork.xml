@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_60" class="java.beans.XMLDecoder">
+ <object class="com.telesens.afanasiev.simulator.TransportNetwork" id="TransportNetwork0">
+  <void property="arcs">
+   <void method="add">
+    <object class="com.telesens.afanasiev.simulator.Arc" id="Arc0">
+     <void property="duration">
+      <int>3</int>
+     </void>
+     <void property="nodeLeft">
+      <object class="com.telesens.afanasiev.simulator.Station" id="Station0">
+       <void property="ID">
+        <long>1</long>
+       </void>
+       <void property="name">
+        <string>Героев Труда</string>
+       </void>
+       <void property="transportNetWork">
+        <object idref="TransportNetwork0"/>
+       </void>
+      </object>
+     </void>
+     <void property="nodeRight">
+      <object class="com.telesens.afanasiev.simulator.Station" id="Station1">
+       <void property="ID">
+        <long>5</long>
+       </void>
+       <void property="name">
+        <string>Киевская</string>
+       </void>
+       <void property="transportNetWork">
+        <object idref="TransportNetwork0"/>
+       </void>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.simulator.Arc" id="Arc1">
+     <void property="duration">
+      <int>2</int>
+     </void>
+     <void property="nodeLeft">
+      <object idref="Station1"/>
+     </void>
+     <void property="nodeRight">
+      <object class="com.telesens.afanasiev.simulator.Station" id="Station2">
+       <void property="ID">
+        <long>8</long>
+       </void>
+       <void property="name">
+        <string>Советская</string>
+       </void>
+       <void property="transportNetWork">
+        <object idref="TransportNetwork0"/>
+       </void>
+      </object>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.telesens.afanasiev.simulator.Arc" id="Arc2">
+     <void property="duration">
+      <int>5</int>
+     </void>
+     <void property="nodeLeft">
+      <object idref="Station2"/>
+     </void>
+     <void property="nodeRight">
+      <object idref="Station0"/>
+     </void>
+    </object>
+   </void>
+  </void>
+  <void property="routes">
+   <void method="add">
+    <object class="com.telesens.afanasiev.simulator.Route" id="Route0">
+     <void property="ID">
+      <long>1</long>
+     </void>
+     <void property="arcs">
+      <void method="add">
+       <object idref="Arc0"/>
+      </void>
+      <void method="add">
+       <object idref="Arc1"/>
+      </void>
+      <void method="add">
+       <object idref="Arc2"/>
+      </void>
+     </void>
+     <void property="description">
+      <string></string>
+     </void>
+     <void property="direct">
+      <object class="java.lang.Enum" method="valueOf">
+       <class>com.telesens.afanasiev.simulator.Direct</class>
+       <string>FORWARD</string>
+      </object>
+     </void>
+     <void property="firstNode">
+      <object idref="Station0"/>
+     </void>
+     <void property="number">
+      <string>test</string>
+     </void>
+    </object>
+   </void>
+  </void>
+ </object>
+</java>

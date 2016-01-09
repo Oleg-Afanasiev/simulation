@@ -1,6 +1,8 @@
 package com.telesens.afanasiev.simulator;
 
-import com.telesens.afanasiev.reporter.ReportCollector;
+import com.telesens.afanasiev.reporter.BusReporter;
+import com.telesens.afanasiev.reporter.LogCollector;
+import com.telesens.afanasiev.reporter.RunReporter;
 
 import java.util.*;
 
@@ -16,7 +18,7 @@ public class BusRun implements Observer{
         completed;
     }
 
-    private ReportCollector reportCollector;
+    private BusReporter logCollector;
 
     private Bus bus;
     private Route<Station> routeForward;
@@ -26,6 +28,9 @@ public class BusRun implements Observer{
     private int breakForwardDuration;
     private int breakBackDuration;
     private Queue<Phase> phase;
+    private Date timeStart;
+
+    private int passDeliveredCount;
 
     private int remainTimeToNextStation;
     private Iterator<Arc<Station>> arcIterator;
@@ -39,7 +44,7 @@ public class BusRun implements Observer{
         this.routeBack = routeBack;
 
 
-        reportCollector = ReportCollector.getInstance();
+        logCollector = LogCollector.getInstance();
         phase = new ArrayDeque<>();
         phase.add(Phase.runForward);
         phase.add(Phase.breakForward);
@@ -60,17 +65,19 @@ public class BusRun implements Observer{
         return phase.peek() == Phase.completed;
     }
 
-    public void start(Date curTime) {
+    public void start(Date actualTime) {
+        timeStart = actualTime;
+        passDeliveredCount = 0;
         currentRoute = routeForward;
         arcIterator = currentRoute.iterator();
 
         Station startStation = currentRoute.getFirstNode();
-        reportCollector.sendMessage(bus.toString(), "<<<Начал рейс >>>");
+        logCollector.sendBusLogRunProgress(bus.getNumber(), "<<<Начал рейс >>>");
 
-        doStop(startStation);
+        doStop(startStation, actualTime);
     }
 
-    public void tick(Date curTime) {
+    public void tick(Date actualTime) {
         remainTimeToNextStation--;
 
         if (remainTimeToNextStation == 0) {
@@ -78,67 +85,66 @@ public class BusRun implements Observer{
             switch (phase.peek()) {
                 case runForward:
                 case runBack:
-                    doStop(nextStation);
+                    doStop(nextStation, actualTime);
                     break;
 
                 case breakForward:
                 case breakBack:
-                    finishBreak();
+                    finishBreak(actualTime);
                     break;
             }
         }
     }
 
-    private void doStop(Station station) {
-        reportCollector.sendMessage(bus.toString(),
-                String.format("Прибыл на остановку %s, кол-во пассажиров в салоне %s, свободных мест %d.",
-                        station, bus.getCountPassengers(), bus.getFreeSeats()));
+    private void doStop(Station station, Date actualTime) {
+        logCollector.sendBusLogArriveStation(bus.getNumber(), station.getID(), station.getName(),
+                bus.getPassengersCount(), bus.getFreeSeatsCount());
 
-        int passDebussedCount = bus.debusPassengersOut(station);
-
-        reportCollector.sendMessage(bus.toString(),
-                String.format("Высадил пассажиров %d, осталось свободных мест %d.",
-                        passDebussedCount, bus.getFreeSeats()));
+        int getOffPassCount = bus.getOffPassengers(station, actualTime);
+        passDeliveredCount += getOffPassCount;
+        Collection<Passenger> takeInPassengers = new ArrayList<>(); // *?????????????????????????
+        boolean hasNext = false;    // *?????????????????????????
 
         if (arcIterator.hasNext()) {
-            Collection<Passenger> passengersEnteredIn = station.welcomeToBus(bus, currentRoute);
-            bus.takePassengersIn(passengersEnteredIn);
-
-            reportCollector.sendMessage(bus.toString(),
-                    String.format("Принял пассажиров %d, осталось свободных мест %d.",
-                            passengersEnteredIn.size(), bus.getFreeSeats()));
+            hasNext = true;
+            takeInPassengers = station.welcomeToBus(bus, currentRoute, getOffPassCount, actualTime);
+            bus.takePassengersIn(takeInPassengers);
 
             Arc<Station> nextArc = arcIterator.next();
             remainTimeToNextStation = nextArc.getDuration();
             nextStation = nextArc.getOppositeNode(station);
-            reportCollector.sendMessage(bus.toString(),
-                    String.format("Начал движение к следующей остановке."));
         } else {
-            changePhaseOfRun();
+            changePhaseOfRun(actualTime);
         }
+
+        logCollector.sendBusLogDoStop(bus.getNumber(), currentRoute.getID(), currentRoute.getNumber(), station.getID(), station.getName(),
+                getOffPassCount, takeInPassengers.size(), bus.getPassengersCount(), bus.getFreeSeatsCount());
+
+        if (hasNext)
+            logCollector.sendBusLogRunProgress(bus.getNumber(), "Начал движение к следующей остановке");
     }
 
-    private void finishBreak() {
-        reportCollector.sendMessage(bus.toString(), "<<< Закончился перерыв >>> ");
-        changePhaseOfRun();
+    private void finishBreak(Date actualTime) {
+        logCollector.sendBusLogRunProgress(bus.getNumber(), "<<< Закончился перерыв >>> ");
+        changePhaseOfRun(actualTime);
     }
 
-    private void changePhaseOfRun() {
+    private void changePhaseOfRun(Date actualTime) {
         switch (phase.peek()) {
             case runForward:
                 phase.poll();
-                startBreakForward();
+                startBreakForward(actualTime);
                 break;
 
             case runBack:
                 phase.poll();
-                startBreakBack();
+                startBreakBack(actualTime);
                 break;
 
             case breakForward:
                 phase.poll();
                 if (routeForward.getType() == TypeOfRoute.SIMPLE)
-                    startBack();
+                    startBack(actualTime);
                 else  //... == TypeOfRoute.CIRCULAR
                     finishRun();
                 break;
@@ -150,29 +156,35 @@ public class BusRun implements Observer{
         }
     }
 
-    private void startBreakForward() {
+    private void startBreakForward(Date timeFinish) {
+        ((RunReporter)logCollector).sendRunLog(currentRoute.getID(), currentRoute.getNumber(), bus.getNumber(),
+                timeStart, timeFinish, passDeliveredCount);
+
         remainTimeToNextStation = breakForwardDuration;
-        reportCollector.sendMessage(bus.toString(), "<<< Встал на перерыв >>>");
+        logCollector.sendBusLogRunProgress(bus.getNumber(), "<<< Встал на перерыв >>>");
     }
 
-    private void startBreakBack() {
+    private void startBreakBack(Date timeFinish) {
+        ((RunReporter)logCollector).sendRunLog(currentRoute.getID(), currentRoute.getNumber(), bus.getNumber(),
+                timeStart, timeFinish, passDeliveredCount);
         remainTimeToNextStation = breakBackDuration;
-        reportCollector.sendMessage(bus.toString(), "<<< Встал на перерыв >>>");
+        logCollector.sendBusLogRunProgress(bus.getNumber(), "<<< Встал на перерыв >>>");
     }
 
-    private void startBack() {
+    private void startBack(Date actualTime) {
+        timeStart = actualTime;
+        passDeliveredCount = 0;
         currentRoute = routeBack;
         arcIterator = routeBack.iterator();
         nextStation = routeBack.getFirstNode();
 
-        reportCollector.sendMessage(bus.toString(), "<<< Начал обратный рейс >>>");
+        logCollector.sendBusLogRunProgress(bus.getNumber(), "<<< Начал обратный рейс >>>");
 
-        doStop(nextStation);
+        doStop(nextStation, actualTime);
     }
 
     private void finishRun() {
-        reportCollector.sendMessage(bus.toString(),
-                String.format("<<< Завершил рейс >>>"));
+        logCollector.sendBusLogRunProgress(bus.getNumber(), "<<< Завершил рейс >>>");
     }
 
 }

@@ -1,19 +1,18 @@
 package com.telesens.afanasiev.simulator;
 
 import com.telesens.afanasiev.helper.DaoUtils;
+import lombok.Data;
 
-import java.beans.XMLDecoder;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by oleg on 12/9/15.
  */
+@Data
 public class TransportNetwork implements Observer, TransportMap, Serializable {
 
-    private static final long seraialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private volatile static TransportNetwork uniqueInstance;
 
     private Set<Arc<Station>> arcs;
@@ -33,22 +32,6 @@ public class TransportNetwork implements Observer, TransportMap, Serializable {
         }
 
         return uniqueInstance;
-    }
-
-    public Set<Arc<Station>> getArcs() {
-        return arcs;
-    }
-
-    public void setArcs(Set<Arc<Station>> arcs) {
-        this.arcs = arcs;
-    }
-
-    public Collection<Route<Station>> getRoutes() {
-        return routes;
-    }
-
-    public void setRoutes(Collection<Route<Station>> routes) {
-        this.routes = routes;
     }
 
     @SafeVarargs

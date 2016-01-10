@@ -1,5 +1,7 @@
 package com.telesens.afanasiev.simulator;
 
+import lombok.Getter;
+
 import java.util.*;
 
 /**
@@ -7,9 +9,9 @@ import java.util.*;
  */
 public class Bus {
     private long ID;
-    private final int CAPACITY;
+    @Getter private final int CAPACITY;
 
-    private String number;
+    @Getter private String number;
     private List<Passenger> passengers;
 
     public Bus(int capacity, String number) {
@@ -22,10 +24,6 @@ public class Bus {
         passengers = new LinkedList<>();
     }
 
-    public String getNumber() {
-        return number;
-    }
-
     public int getFreeSeatsCount() {
         return CAPACITY - passengers.size();
     }
@@ -36,10 +34,6 @@ public class Bus {
 
     public void takePassengersIn(Collection<Passenger> satisfiedPassengers) {
         passengers.addAll(satisfiedPassengers);
-    }
-
-    public int getCapatity() {
-        return CAPACITY;
     }
 
     public int getOffPassengers(Station station, Date actualTime) {

@@ -16,7 +16,7 @@
        <void property="passCount">
         <int>200</int>
        </void>
-       <void property="passTargetStations">
+       <void property="passTargetSpreading">
         <object class="com.telesens.afanasiev.rules.PassengerTargetSpreading" id="PassengerTargetSpreading0">
          <void property="sum">
           <int>10</int>
@@ -54,7 +54,7 @@
        <void property="passCount">
         <int>300</int>
        </void>
-       <void property="passTargetStations">
+       <void property="passTargetSpreading">
         <object class="com.telesens.afanasiev.rules.PassengerTargetSpreading" id="PassengerTargetSpreading1">
          <void property="sum">
           <int>2</int>
@@ -97,7 +97,7 @@
        <void property="passCount">
         <int>100</int>
        </void>
-       <void property="passTargetStations">
+       <void property="passTargetSpreading">
         <object class="com.telesens.afanasiev.rules.PassengerTargetSpreading" id="PassengerTargetSpreading2">
          <void property="sum">
           <int>10</int>
@@ -133,7 +133,7 @@
        <void property="passCount">
         <int>150</int>
        </void>
-       <void property="passTargetStations">
+       <void property="passTargetSpreading">
         <object class="com.telesens.afanasiev.rules.PassengerTargetSpreading" id="PassengerTargetSpreading3">
          <void property="sum">
           <int>10</int>
@@ -176,7 +176,7 @@
        <void property="passCount">
         <int>250</int>
        </void>
-       <void property="passTargetStations">
+       <void property="passTargetSpreading">
         <object class="com.telesens.afanasiev.rules.PassengerTargetSpreading" id="PassengerTargetSpreading4">
          <void property="sum">
           <int>1</int>
@@ -208,7 +208,7 @@
        <void property="passCount">
         <int>350</int>
        </void>
-       <void property="passTargetStations">
+       <void property="passTargetSpreading">
         <object class="com.telesens.afanasiev.rules.PassengerTargetSpreading" id="PassengerTargetSpreading5">
          <void property="sum">
           <int>1</int>

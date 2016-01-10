@@ -3,7 +3,7 @@ package com.telesens.afanasiev.simulator;
 import com.telesens.afanasiev.helper.DateTimeHelper;
 import com.telesens.afanasiev.loader.TimeTable;
 import com.telesens.afanasiev.reporter.LogCollector;
-import com.telesens.afanasiev.reporter.SimulatorReporter;
+import com.telesens.afanasiev.reporter.interfaces.SimulatorReporter;
 import com.telesens.afanasiev.rules.PassengerGenerationRules;
 
 import java.util.*;
@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class BusTrafficSimulator implements Runnable {
     private Clock clock;
-    private PassengerSheduler passengerSheduler;
+    private PassengerScheduler passengerScheduler;
     private Collection<RouteDispatcher> routesDispatcher;
     private TransportNetwork busNetwork;
     private TimeTable timeTable;
@@ -30,7 +30,7 @@ public class BusTrafficSimulator implements Runnable {
         this.busNetwork = busNetwork;
         reportCollector = LogCollector.getInstance();
         routesDispatcher = new ArrayList<>();
-        passengerSheduler = new PassengerSheduler(passGenerationRules);
+        passengerScheduler = new PassengerScheduler(passGenerationRules);
         this.timeTable = timeTable;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
@@ -38,7 +38,7 @@ public class BusTrafficSimulator implements Runnable {
         for (Route<Station> route : busNetwork.getAllRoutes())
             routesDispatcher.add(new RouteDispatcher(route));
 
-        passengerSheduler.registerRoutes(busNetwork.getAllRoutes());
+        passengerScheduler.registerRoutes(busNetwork.getAllRoutes());
     }
 
     public void start() {
@@ -51,7 +51,7 @@ public class BusTrafficSimulator implements Runnable {
         // The main loop of the simulation
         while (actualTime.before(timeTo)) {
 
-            passengerSheduler.tick(actualTime);
+            passengerScheduler.tick(actualTime);
             long routeId;
             Date timeStart;
             for (RouteDispatcher routeDispatcher : routesDispatcher) {
@@ -77,11 +77,6 @@ public class BusTrafficSimulator implements Runnable {
 
     public String allRoutesToString() {
         return busNetwork.allRoutesToString();
-    }
-
-    @Override
-    public String toString() {
-        return "";
     }
 
     @Override

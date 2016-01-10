@@ -1,6 +1,8 @@
 package com.telesens.afanasiev.rules;
 
 import com.telesens.afanasiev.helper.DateTimeHelper;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.*;
@@ -8,6 +10,7 @@ import java.util.*;
 /**
  * Created by oleg on 1/5/16.
  */
+@Data
 public class PassengerGenerationRules implements Serializable {
     private static final long serialVersionUID=1L;
 
@@ -15,14 +18,6 @@ public class PassengerGenerationRules implements Serializable {
 
     public PassengerGenerationRules() {
         queueGenerationRules = new HashMap<>();
-    }
-
-    public Map<Long, Deque<PassengerGenerationUnit>> getQueueGenerationRules() {
-        return queueGenerationRules;
-    }
-
-    public void setQueueGenerationRules(Map<Long, Deque<PassengerGenerationUnit>> queueGenerationRules) {
-        this.queueGenerationRules = queueGenerationRules;
     }
 
     public void addRule(long stationId, Date timeFrom, int duration, int passCount, int limitWaiting, PassengerTargetSpreading passTargetSpreading)

@@ -1,5 +1,8 @@
 package com.telesens.afanasiev.loader;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -10,18 +13,10 @@ public class TimeTable implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Map<Long, Queue<TimeTableUnit>> queueMapOfTasks;
+    @Getter @Setter private Map<Long, Queue<TimeTableUnit>> queueMapOfTasks;
 
     public TimeTable() {
         queueMapOfTasks = new HashMap<>();
-    }
-
-    public Map<Long, Queue<TimeTableUnit>> getQueueMapOfTasks() {
-        return queueMapOfTasks;
-    }
-
-    public void setQueueMapOfTasks(Map<Long, Queue<TimeTableUnit>> queueMapOfTasks) {
-        this.queueMapOfTasks = queueMapOfTasks;
     }
 
     public void addTask(long routeId, Date timeStart, int breakForwardDuration, int breakBackDuration) {

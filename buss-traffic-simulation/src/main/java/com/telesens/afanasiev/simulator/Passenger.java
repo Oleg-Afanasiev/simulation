@@ -1,7 +1,8 @@
 package com.telesens.afanasiev.simulator;
 
-import com.telesens.afanasiev.reporter.PassengerReporter;
+import com.telesens.afanasiev.reporter.interfaces.PassengerReporter;
 import com.telesens.afanasiev.reporter.LogCollector;
+import lombok.Getter;
 
 import java.util.Date;
 
@@ -9,14 +10,14 @@ import java.util.Date;
  * Created by oleg on 12/17/15.
  */
 public class Passenger implements Observer {
-    private long ID;
+    @Getter private long ID;
     private String name;
     private long stationFromId;
-    private long stationTargetId;
+    @Getter private long stationTargetId;
     private PassengerReporter reportCollector;
     private Date timeComeInBus;
     private Date timeGoOffBus;
-    private int limitTimeWaiting;
+    @Getter private int limitTimeWaiting;
     private TransportMap transportMap;
 
     public Passenger(long stationFromId, long stationTargetId, int limitTimeWaiting) {
@@ -31,18 +32,6 @@ public class Passenger implements Observer {
 
         reportCollector = LogCollector.getInstance();
         transportMap = TransportNetwork.getInstance();
-    }
-
-    public long getID() {
-        return ID;
-    }
-
-    public int getLimitTimeWaiting() {
-        return limitTimeWaiting;
-    }
-
-    public long getTargetId() {
-        return stationTargetId;
     }
 
     public boolean isTarget(Station station) {

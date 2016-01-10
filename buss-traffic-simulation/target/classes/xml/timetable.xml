@@ -7,212 +7,142 @@
     <object class="java.util.PriorityQueue">
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448946000000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448946000000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448946540000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448946540000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448947080000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448947080000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448947620000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448947620000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448948160000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448948160000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448948700000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448948700000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448949240000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448949240000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448949780000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448949780000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448950320000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448950320000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448950860000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448950860000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448951400000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448951400000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448951940000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448951940000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448952480000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448952480000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
      <void method="add">
       <object class="com.telesens.afanasiev.loader.TimeTableUnit">
-       <void property="breakForwardDuration">
-        <int>5</int>
-       </void>
-       <void property="idRoute">
-        <long>1</long>
-       </void>
-       <void property="timeStart">
-        <object class="java.util.Date">
-         <long>1448953020000</long>
-        </object>
-       </void>
+       <long>1</long>
+       <object class="java.util.Date">
+        <long>1448953020000</long>
+       </object>
+       <int>5</int>
+       <int>0</int>
       </object>
      </void>
     </object>

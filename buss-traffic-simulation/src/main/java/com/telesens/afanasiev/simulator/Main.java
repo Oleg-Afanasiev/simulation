@@ -2,9 +2,12 @@ package com.telesens.afanasiev.simulator;
 
 import com.telesens.afanasiev.helper.DaoUtils;
 import com.telesens.afanasiev.helper.DateTimeHelper;
+import com.telesens.afanasiev.jaxb.logs.Buses;
+import com.telesens.afanasiev.jaxb.logs.Passengers;
+import com.telesens.afanasiev.jaxb.logs.Runs;
+import com.telesens.afanasiev.jaxb.logs.Stations;
 import com.telesens.afanasiev.loader.TimeTable;
-import com.telesens.afanasiev.reporter.LogWriter;
-import com.telesens.afanasiev.reporter.XmlWriter;
+import com.telesens.afanasiev.reporter.*;
 import com.telesens.afanasiev.rules.PassengerGenerationRules;
 import com.telesens.afanasiev.rules.PassengerTargetSpreading;
 
@@ -32,6 +35,8 @@ public class Main {
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
 
+        TransportNetwork tn;
+
         initFromTo();
 
         initBusNetwork();
@@ -49,11 +54,24 @@ public class Main {
         simulator = new BusTrafficSimulator(busNetwork, timeTable, passGenerationRules, timeFrom, timeTo);
         Thread tSimulator = new Thread(simulator);
         Thread tLogWriter = new Thread(new LogWriter());
-        Thread tXmlWriter = new Thread(new XmlWriter());
+        Thread tBusXmlWriter = new Thread(new XmlWriter("./src/main/resources/xml/logs/bus.xml",
+                Buses.class, Buses.Log.class, new BusXmlWriter()));
+
+        Thread tPassXmlWriter = new Thread(new XmlWriter("./src/main/resources/xml/logs/passengers.xml",
+                Passengers.class, Passengers.Log.class, new PassengerXmlWriter()));
+
+        Thread tStationXmlWriter = new Thread(new XmlWriter("./src/main/resources/xml/logs/station.xml",
+                Stations.class, Stations.Log.class, new StationXmlWriter()));
+
+        Thread tRouteXmlWriter = new Thread(new XmlWriter("./src/main/resources/xml/logs/route.xml",
+                Runs.class, Runs.Log.class, new RouteXmlWriter()));
 
         tSimulator.start();
         tLogWriter.start();
-        tXmlWriter.start();
+        tBusXmlWriter.start();
+        tPassXmlWriter.start();
+        tStationXmlWriter.start();
+        tRouteXmlWriter.start();
 
         //simulator.loadData(timeTable, passGenerationRules);
         //System.out.println(simulator.allRoutesToString());

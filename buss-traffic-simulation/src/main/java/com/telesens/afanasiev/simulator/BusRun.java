@@ -1,8 +1,9 @@
 package com.telesens.afanasiev.simulator;
 
-import com.telesens.afanasiev.reporter.BusReporter;
+import com.telesens.afanasiev.reporter.interfaces.BusReporter;
 import com.telesens.afanasiev.reporter.LogCollector;
-import com.telesens.afanasiev.reporter.RunReporter;
+import com.telesens.afanasiev.reporter.interfaces.RunReporter;
+import lombok.Getter;
 
 import java.util.*;
 
@@ -20,7 +21,7 @@ public class BusRun implements Observer{
 
     private BusReporter logCollector;
 
-    private Bus bus;
+    @Getter private Bus bus;
     private Route<Station> routeForward;
     private Route<Station> routeBack; // if routeBack == null => type of routeForward is CIRCULAR
     private Route<Station> currentRoute;
@@ -55,10 +56,6 @@ public class BusRun implements Observer{
         }
 
         phase.add(Phase.completed);
-    }
-
-    public Bus getBus() {
-        return bus;
     }
 
     public boolean isCompleted() {

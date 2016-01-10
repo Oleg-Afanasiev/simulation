@@ -10,13 +10,13 @@ import java.util.Date;
 /**
  * Created by oleg on 12/9/15.
  */
-public class PassengerSheduler implements Observer {
+public class PassengerScheduler implements Observer {
 
     private Collection<Route<Station>> routes;
     private long iPassCounter = 1;
     private PassengerGenerationRules passGenerationRules;
 
-    public PassengerSheduler(PassengerGenerationRules passGenerationRules) {
+    public PassengerScheduler(PassengerGenerationRules passGenerationRules) {
         this.passGenerationRules = passGenerationRules;
     }
 
@@ -32,7 +32,7 @@ public class PassengerSheduler implements Observer {
 
     @Override
     public String toString() {
-        return "Passenger sheduler";
+        return "Passenger scheduler";
     }
 
     private void generatePassengersForRoute(Route<Station> route, Date curTime) {

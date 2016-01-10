@@ -1,5 +1,7 @@
 package com.telesens.afanasiev.rules;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +10,7 @@ import java.util.Random;
 /**
  * Created by oleg on 1/5/16.
  */
+@Data
 public class PassengerTargetSpreading implements Serializable{
     private static final long serialVersionUID = 1L;
     private Map<Long, Integer> targetSpreading;
@@ -15,23 +18,6 @@ public class PassengerTargetSpreading implements Serializable{
 
     public PassengerTargetSpreading() {
         targetSpreading = new HashMap<>();
-    }
-
-    public Map<Long, Integer> getTargetSpreading() {
-        return targetSpreading;
-    }
-
-    public void setTargetSpreading(Map<Long, Integer> targetSpreading) {
-        this.targetSpreading = targetSpreading;
-        updateSum();
-    }
-
-    public int getSum() {
-        return sum;
-    }
-
-    public void setSum(int sum) {
-        this.sum = sum;
     }
 
     public void addTarget(long stationTargetId, int factor) {

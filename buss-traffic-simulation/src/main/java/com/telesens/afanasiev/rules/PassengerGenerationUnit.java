@@ -2,6 +2,7 @@ package com.telesens.afanasiev.rules;
 
 import com.telesens.afanasiev.helper.DateTimeHelper;
 import com.telesens.afanasiev.simulator.Passenger;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.*;
@@ -9,22 +10,19 @@ import java.util.*;
 /**
  * Created by oleg on 1/5/16.
  */
+@NoArgsConstructor
 public class PassengerGenerationUnit implements Serializable{
     private static final long serialVersionUID = 1L;
 
-    private long stationId;
-    private Date timeFrom;  // 'timeFrom' - inclusive
-    private int duration; // 'timeFrom' + 'duration' - exclusive
-    private int passCount;
-    private int minutesLimitWaiting; //how much minutes
-    private PassengerTargetSpreading passTargetSpreading;
+    @Getter @Setter private long stationId;
+    @Getter @Setter private Date timeFrom;  // 'timeFrom' - inclusive
+    @Getter @Setter private int duration; // 'timeFrom' + 'duration' - exclusive
+    @Getter @Setter private int passCount;
+    @Getter @Setter private int minutesLimitWaiting; //how much minutes
+    @Getter @Setter private PassengerTargetSpreading passTargetSpreading;
 
     private transient final int TIME_GEN_MAX_STEP = 3; // minutes
     private transient Map<Integer, Collection<Passenger>> passTimeSpreading;
-
-    public PassengerGenerationUnit() {
-
-    }
 
     public PassengerGenerationUnit(long stationId, Date timeFrom, int duration, int passCount, int minutesLimitWaiting, PassengerTargetSpreading passTargetSpreading) {
         this.stationId = stationId;
@@ -33,54 +31,6 @@ public class PassengerGenerationUnit implements Serializable{
         this.passCount = passCount;
         this.minutesLimitWaiting = minutesLimitWaiting;
         this.passTargetSpreading = passTargetSpreading;
-    }
-
-    public Date getTimeFrom() {
-        return timeFrom;
-    }
-
-    public void setTimeFrom(Date timeFrom) {
-        this.timeFrom = timeFrom;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public int getPassCount() {
-        return passCount;
-    }
-
-    public void setPassCount(int passCount) {
-        this.passCount = passCount;
-    }
-
-    public int getMinutesLimitWaiting() {
-        return minutesLimitWaiting;
-    }
-
-    public void setMinutesLimitWaiting(int minutesLimitWaiting) {
-        this.minutesLimitWaiting = minutesLimitWaiting;
-    }
-
-    public long getStationId() {
-        return stationId;
-    }
-
-    public void setStationId(long stationId) {
-        this.stationId = stationId;
-    }
-
-    public PassengerTargetSpreading getPassTargetStations() {
-        return passTargetSpreading;
-    }
-
-    public void setPassTargetStations(PassengerTargetSpreading passTargetStations) {
-        this.passTargetSpreading = passTargetStations;
     }
 
     public boolean isActual(Date curTime) {
@@ -98,6 +48,7 @@ public class PassengerGenerationUnit implements Serializable{
         }
 
         int diffMinutes = DateTimeHelper.diffMinutes(timeFrom, curTime);
+
         if (!passTimeSpreading.containsKey(diffMinutes))
             passengers = new ArrayList<>();
         else {

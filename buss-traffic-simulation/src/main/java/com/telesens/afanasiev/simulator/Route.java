@@ -1,5 +1,7 @@
 package com.telesens.afanasiev.simulator;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -38,6 +40,7 @@ enum Direct {
 /**
  * Created by oleg on 12/7/15.
  */
+@Data
 public class Route<T> implements Iterable<Arc<T>>, Serializable {
     class RouteIterator implements Iterator<Arc<T>> {
         private int iteratorCursor = -1;
@@ -99,62 +102,6 @@ public class Route<T> implements Iterable<Arc<T>>, Serializable {
             }
             else
                 throw new IllegalArgumentException("Incorrect sequence of 'listArgs' for 'Route'. ");
-    }
-
-    public long getID() {
-        return ID;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Arc<T>> getArcs() {
-        return arcs;
-    }
-
-    public void setArcs(List<Arc<T>> arcs) {
-        this.arcs = arcs;
-    }
-
-    public Direct getDirect() {
-        return direct;
-    }
-
-    public void setDirect(Direct direct) {
-        this.direct = direct;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
-    public T getFirstNode() {
-        return firstNode;
-    }
-
-    public void setFirstNode(T firstNode) {
-        this.firstNode = firstNode;
     }
 
     public T getLastNode() {

@@ -38,12 +38,9 @@
    <void method="add">
     <object class="com.telesens.afanasiev.simulator.Arc" id="Arc1">
      <void property="duration">
-      <int>2</int>
+      <int>5</int>
      </void>
      <void property="nodeLeft">
-      <object idref="Station1"/>
-     </void>
-     <void property="nodeRight">
       <object class="com.telesens.afanasiev.simulator.Station" id="Station2">
        <void property="ID">
         <long>8</long>
@@ -56,18 +53,21 @@
        </void>
       </object>
      </void>
+     <void property="nodeRight">
+      <object idref="Station0"/>
+     </void>
     </object>
    </void>
    <void method="add">
     <object class="com.telesens.afanasiev.simulator.Arc" id="Arc2">
      <void property="duration">
-      <int>5</int>
+      <int>2</int>
      </void>
      <void property="nodeLeft">
-      <object idref="Station2"/>
+      <object idref="Station1"/>
      </void>
      <void property="nodeRight">
-      <object idref="Station0"/>
+      <object idref="Station2"/>
      </void>
     </object>
    </void>
@@ -83,10 +83,10 @@
        <object idref="Arc0"/>
       </void>
       <void method="add">
-       <object idref="Arc1"/>
+       <object idref="Arc2"/>
       </void>
       <void method="add">
-       <object idref="Arc2"/>
+       <object idref="Arc1"/>
       </void>
      </void>
      <void property="description">

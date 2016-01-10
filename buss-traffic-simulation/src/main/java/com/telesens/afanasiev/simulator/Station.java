@@ -1,7 +1,10 @@
 package com.telesens.afanasiev.simulator;
 
 import com.telesens.afanasiev.reporter.LogCollector;
-import com.telesens.afanasiev.reporter.StationReporter;
+import com.telesens.afanasiev.reporter.interfaces.StationReporter;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.*;
@@ -13,9 +16,9 @@ public class Station implements Observer, Serializable {
     private static final long serialVersionUID = 1;
 
     private transient StationReporter logCollector;
-    private TransportMap transportNetWork;
-    private long ID;
-    private String name;
+    @Getter @Setter private  TransportMap transportNetWork;
+    @Getter @Setter private long ID;
+    @Getter @Setter private String name;
     private transient LinkedList<Passenger> queueOfPassengers;
 
     public Station() {
@@ -28,30 +31,6 @@ public class Station implements Observer, Serializable {
         this.transportNetWork = transportNetWork;
         logCollector = LogCollector.getInstance();
         queueOfPassengers = new LinkedList<>();
-    }
-
-    public long getID() {
-        return ID;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public TransportMap getTransportNetWork() {
-        return transportNetWork;
-    }
-
-    public void setTransportNetWork(TransportMap transportNetWork) {
-        this.transportNetWork = transportNetWork;
     }
 
     public void addPassengers(Collection<Passenger> passengers) {

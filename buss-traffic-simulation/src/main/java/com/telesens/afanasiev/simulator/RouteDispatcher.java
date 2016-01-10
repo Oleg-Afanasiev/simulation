@@ -3,7 +3,7 @@ package com.telesens.afanasiev.simulator;
 import com.telesens.afanasiev.helper.DaoUtils;
 import com.telesens.afanasiev.loader.TimeTableUnit;
 import com.telesens.afanasiev.reporter.LogCollector;
-import com.telesens.afanasiev.reporter.RouteReporter;
+import com.telesens.afanasiev.reporter.interfaces.RouteReporter;
 
 import java.util.*;
 

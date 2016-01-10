@@ -1,12 +1,17 @@
 package com.telesens.afanasiev.simulator;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
  * Created by oleg on 12/5/15.
  */
+@NoArgsConstructor
+@Data
 public class Arc<T> implements Serializable {
-    private static final long serialVerionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public static class EqualNodesException extends RuntimeException {
         private String msg;
@@ -32,10 +37,6 @@ public class Arc<T> implements Serializable {
     private T nodeRight;
     private int duration;
 
-    public Arc() {
-
-    }
-
     public Arc(T nodeLeft, T nodeRight, int duration) throws EqualNodesException {
         if (nodeLeft.equals(nodeRight))
             throw new EqualNodesException("ErrorNodesInit! Two nodes must be differ");
@@ -45,30 +46,6 @@ public class Arc<T> implements Serializable {
 
         this.nodeLeft = nodeLeft;
         this.nodeRight = nodeRight;
-        this.duration = duration;
-    }
-
-    public T getNodeLeft() {
-        return nodeLeft;
-    }
-
-    public T getNodeRight() {
-        return nodeRight;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setNodeLeft(T nodeLeft) {
-        this.nodeLeft = nodeLeft;
-    }
-
-    public void setNodeRight(T nodeRight) {
-        this.nodeRight = nodeRight;
-    }
-
-    public void setDuration(int duration) {
         this.duration = duration;
     }
 

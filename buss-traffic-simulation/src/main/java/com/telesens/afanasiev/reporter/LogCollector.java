@@ -1,6 +1,11 @@
 package com.telesens.afanasiev.reporter;
 
 import com.telesens.afanasiev.helper.DateTimeHelper;
+import com.telesens.afanasiev.reporter.interfaces.*;
+import com.telesens.afanasiev.reporter.unit.BusLogUnit;
+import com.telesens.afanasiev.reporter.unit.PassengerLogUnit;
+import com.telesens.afanasiev.reporter.unit.RunLogUnit;
+import com.telesens.afanasiev.reporter.unit.StationLogUnit;
 
 import java.util.ArrayDeque;
 import java.util.Date;
@@ -10,9 +15,11 @@ import java.util.Queue;
  * Created by oleg on 12/17/15.
  */
 public class LogCollector implements
-        ClockReporter, SimulatorReporter, RouteReporter, PassengerReporter, StationReporter, BusReporter, RunReporter {
+        ClockReporter, SimulatorReporter, RouteReporter, PassengerReporter, StationReporter, BusReporter, RunReporter,
+        MsgLogGetter, BusLogGetter, RunLogGetter, PassengerLogGetter, StationLogGetter {
+
     private volatile static LogCollector uniqueInstance;
-    private volatile Queue<String> queueOfLogMsg;
+    private volatile Queue<String> queueOfMsgLogs;
     private volatile Queue<BusLogUnit> queueOfBusLogs;
     private volatile Queue<StationLogUnit> queueOfStationLogs;
     private volatile Queue<PassengerLogUnit> queueOfPassLogs;
@@ -22,7 +29,7 @@ public class LogCollector implements
     private Date actualTime;
 
     private LogCollector() {
-        queueOfLogMsg = new ArrayDeque<>();
+        queueOfMsgLogs = new ArrayDeque<>();
         queueOfBusLogs = new ArrayDeque<>();
         queueOfStationLogs = new ArrayDeque<>();
         queueOfPassLogs = new ArrayDeque<>();
@@ -47,36 +54,36 @@ public class LogCollector implements
     public void sendLogTick(Date actualTime) {
         this.actualTime = actualTime;
 
-        sendLogMessage("", "");
-        sendLogMessage("Clock -> tick", DateTimeHelper.toString(actualTime));
-        sendLogMessage("", "");
+        saveLogMessage("", "");
+        saveLogMessage("Clock -> tick", DateTimeHelper.toString(actualTime));
+        saveLogMessage("", "");
     }
 
     @Override
     public void sendSimulatorLogStart(Date startTime) {
         this.actualTime = startTime;
-        queueOfLogMsg.add("\n******************************* НАЧАЛО СИМУЛЯЦИИ *******************************\n\n");
+        queueOfMsgLogs.add("\n******************************* НАЧАЛО СИМУЛЯЦИИ *******************************\n\n");
 
-        sendLogMessage("Время начала:", DateTimeHelper.toString(startTime));
-        sendLogMessage("", "");
+        saveLogMessage("Время начала:", DateTimeHelper.toString(startTime));
+        saveLogMessage("", "");
     }
 
     @Override
     public void sendSimulatorLogFinish() {
         isFinishSimulation = true;
-        queueOfLogMsg.add("\n******************************* СИМУЛЯЦИЯ ЗАВЕРШЕНА *******************************\n");
+        queueOfMsgLogs.add("\n******************************* СИМУЛЯЦИЯ ЗАВЕРШЕНА *******************************\n");
     }
 
     @Override
     public void sendRouteLog(String routeNumber, int busesRunCount, int busesWaitingCount) {
-        sendLogMessage(
+        saveLogMessage(
                 String.format("Маршрут(ы) № %s", routeNumber),
                 String.format("Кол-во автобусов: в рейсах %d, освободившихся %d", busesRunCount, busesWaitingCount));
     }
 
     @Override
     public void sendPassLogDelivered(long passengerId, long stationIdFrom, String stationName, String busNumber, Date timeComeInBus, Date timeGoOffBus) {
-        sendLogMessage(String.format("Пассажир [ID: %d]", passengerId),
+        saveLogMessage(String.format("Пассажир [ID: %d]", passengerId),
                 String.format("Вышел на остановке \"%s\"", stationName)
         );
 
@@ -88,7 +95,7 @@ public class LogCollector implements
                                             long stationFromId, String stationFromName,
                                             long stationTargetId, String stationTargetName) {
 
-        sendLogMessage(String.format("Пассажир %s [ID: %d]", passengerName, passengerId),
+        saveLogMessage(String.format("Пассажир %s [ID: %d]", passengerName, passengerId),
                 String.format("Пришел на остановку \"%s\". Жду автобус на: \"%s\"", stationFromName, stationTargetName));
     }
 
@@ -99,7 +106,7 @@ public class LogCollector implements
 
     @Override
     public void sendStationLogQueueSize(long stationId, String stationName, int queueSize) {
-        sendLogMessage(String.format("Остановка \"%s\" [ID: %d]", stationName, stationId),
+        saveLogMessage(String.format("Остановка \"%s\" [ID: %d]", stationName, stationId),
                 String.format("Кол-во в очереди: %d", queueSize));
     }
 
@@ -107,11 +114,11 @@ public class LogCollector implements
     public void sendStationLogBusArrived(long stationId, String stationName,
                                          long routeId, String routeNumber, String routeDirect, String busNumber,
                                          int freeSeatsCount, int getOffPassCount, int takeInPassCount, int stayPassCount) {
-        sendLogMessage(String.format("Остановка \"%s\" [ID: %d]", stationName, stationId),
+        saveLogMessage(String.format("Остановка \"%s\" [ID: %d]", stationName, stationId),
                 String.format("Прибыл автобус № %s, маршрут № %s - %s, вышло %d, свободных мест %d",
                         busNumber, routeNumber, routeDirect, getOffPassCount, freeSeatsCount));
 
-        sendLogMessage(String.format("Остановка \"%s\" [ID: %d]", stationName, stationId),
+        saveLogMessage(String.format("Остановка \"%s\" [ID: %d]", stationName, stationId),
                 String.format("В автобус № %s сели %d пассажиров, остались на остановке %d", busNumber, takeInPassCount, stayPassCount));
 
         queueOfStationLogs.add(new StationLogUnit(stationId, -1, routeId, actualTime, busNumber, takeInPassCount, getOffPassCount, stayPassCount));
@@ -119,13 +126,13 @@ public class LogCollector implements
 
     @Override
     public void sendStationLogPassLeft(long stationId, String stationName, long passId, int queueSize) {
-        sendLogMessage(String.format("Остановка \"%s\" [ID: %d]", stationName, stationId),
+        saveLogMessage(String.format("Остановка \"%s\" [ID: %d]", stationName, stationId),
                 String.format("Пассажир [ID = %d] покинул остановку, осталось в очереди: %d", passId, queueSize));
     }
 
     @Override
     public void sendBusLogArriveStation(String busNumber, long stationId, String stationName, int passInsideCount, int freeSeatsCount) {
-        sendLogMessage(String.format("Автобус № %s", busNumber),
+        saveLogMessage(String.format("Автобус № %s", busNumber),
                 String.format("Прибыл на остановку \"%s\", кол-во пассажиров в салоне %s, свободных мест %d",
                         stationName, passInsideCount, freeSeatsCount));
     }
@@ -133,7 +140,7 @@ public class LogCollector implements
     @Override
     public void sendBusLogDoStop(String busNumber, long routeId, String routeName, long stationId, String stationName,
                           int getOffPassCount, int takeInPassCount, int passInsideCount, int freeSeatsCount) {
-        sendLogMessage(String.format("Автобус № %s (марш %s [ID: %d])", busNumber, routeName, routeId),
+        saveLogMessage(String.format("Автобус № %s (марш %s [ID: %d])", busNumber, routeName, routeId),
                 String.format("Высадил %d, принял %d, кол-во пассажиров в салоне %s, осталось свободных мест %d",
                         getOffPassCount, takeInPassCount, passInsideCount, freeSeatsCount));
 
@@ -143,34 +150,76 @@ public class LogCollector implements
 
     @Override
     public void sendBusLogRunProgress(String busNumber, String msg) {
-        sendLogMessage(String.format("Автобус № %s", busNumber), msg);
+        saveLogMessage(String.format("Автобус № %s", busNumber), msg);
     }
 
     @Override
     public void sendRunLog(long routeId, String routeNumber, String busNumber, Date timeStart, Date timeFinish, int passDeliveredCount) {
-        sendLogMessage(String.format("Рейс по маршруту %s [ID: %d]", routeNumber, routeId),
+        saveLogMessage(String.format("Рейс по маршруту %s [ID: %d]", routeNumber, routeId),
                 String.format("Рейс пройден автобусом %s за %d минут (с %s до %s). Перевезено %d пассажиров",
                         busNumber, DateTimeHelper.diffMinutes(timeStart, timeFinish),
                         DateTimeHelper.toString(timeStart), DateTimeHelper.toString(timeFinish), passDeliveredCount)
-                );
+        );
 
         queueOfRunLogs.add(new RunLogUnit(routeId, routeNumber, busNumber, timeStart, timeFinish, passDeliveredCount));
     }
 
-
-    public boolean isFinish() {
+    @Override
+    public boolean isFinishCollect() {
         return isFinishSimulation;
     }
 
-    public String pollMsg() {
-        return queueOfLogMsg.poll();
+    @Override
+    public String pollMsgLog() {
+        return queueOfMsgLogs.poll();
     }
 
-    public int sizeOfQueueMsg() {
-        return queueOfLogMsg.size();
+    @Override
+    public boolean isEmptyMsgLogsQueue() {
+        return queueOfMsgLogs.isEmpty();
     }
 
-    private void sendLogMessage(String src, String msg) {
-        queueOfLogMsg.add(String.format("%-40s | %s", src, msg));
+    @Override
+    public boolean isEmptyBusLogsQueue() {
+        return queueOfBusLogs.isEmpty();
+    }
+
+    @Override
+    public BusLogUnit pollBusLog() {
+        return queueOfBusLogs.poll();
+    }
+
+    @Override
+    public boolean isEmptyRunLogsQueue() {
+        return queueOfRunLogs.isEmpty();
+    }
+
+    @Override
+    public RunLogUnit pollRunLog() {
+        return queueOfRunLogs.poll();
+    }
+
+    @Override
+    public boolean isEmptyPassLogsQueue() {
+        return queueOfPassLogs.isEmpty();
+    }
+
+    @Override
+    public PassengerLogUnit pollPassLog() {
+        return queueOfPassLogs.poll();
+    }
+
+    @Override
+    public boolean isEmptyStationLogsQueue() {
+        return queueOfStationLogs.isEmpty();
+    }
+
+    @Override
+    public StationLogUnit pollStationLog() {
+        return queueOfStationLogs.poll();
+    }
+
+    private void saveLogMessage(String src, String msg) {
+            queueOfMsgLogs.add(String.format("%-40s | %s", src, msg));
     }
 }

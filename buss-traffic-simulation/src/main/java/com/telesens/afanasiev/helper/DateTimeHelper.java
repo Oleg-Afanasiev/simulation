@@ -1,8 +1,13 @@
 package com.telesens.afanasiev.helper;
 
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by oleg on 12/5/15.
@@ -68,12 +73,20 @@ public class DateTimeHelper {
         return (int)(diff / (1000 * 60));
     }
 
-    public static Date roundByMinutes(Date date) {
+    public static Date roundByMinutes(Date dateTime) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        calendar.setTime(dateTime);
         calendar.clear(Calendar.SECOND);
         calendar.clear(Calendar.MILLISECOND);
 
         return calendar.getTime();
+    }
+
+    public static XMLGregorianCalendar timeToXMLGregorianCalendar(Date dateTime) {
+
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        gregorianCalendar.setTime(dateTime);
+
+        return new XMLGregorianCalendarImpl(gregorianCalendar);
     }
 }

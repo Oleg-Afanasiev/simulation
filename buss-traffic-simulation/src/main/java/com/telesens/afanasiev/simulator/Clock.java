@@ -1,7 +1,7 @@
 package com.telesens.afanasiev.simulator;
 
 import com.telesens.afanasiev.helper.DateTimeHelper;
-import com.telesens.afanasiev.reporter.ClockReporter;
+import com.telesens.afanasiev.reporter.interfaces.ClockReporter;
 import com.telesens.afanasiev.reporter.LogCollector;
 
 import java.util.Date;

@@ -145,9 +145,9 @@ public class TestPassengerGenerationUnit {
         for (int m = 0; m < 60; m++) {
             time = DateTimeHelper.incMinutes(timeFrom, m);
             for (Passenger passenger : passGenerationUnit.getPassengers(time)) {
-                if (passenger.getTargetId() == 5)
+                if (passenger.getStationTargetId() == 5)
                     passCountTarget5++;
-                else if (passenger.getTargetId() == 8)
+                else if (passenger.getStationTargetId() == 8)
                     passCountTarget8++;
             }
         }
@@ -163,9 +163,9 @@ public class TestPassengerGenerationUnit {
         for (int m = 60; m < 105; m++) {
             time = DateTimeHelper.incMinutes(timeFrom, m);
             for (Passenger passenger : passGenerationUnit.getPassengers(time)) {
-                if (passenger.getTargetId() == 5)
+                if (passenger.getStationTargetId() == 5)
                     passCountTarget5++;
-                else if (passenger.getTargetId() == 8)
+                else if (passenger.getStationTargetId() == 8)
                     passCountTarget8++;
             }
         }
@@ -182,11 +182,11 @@ public class TestPassengerGenerationUnit {
         for (int m = 105; m < 135; m++) {
             time = DateTimeHelper.incMinutes(timeFrom, m);
             for (Passenger passenger : passGenerationUnit.getPassengers(time)) {
-                if (passenger.getTargetId() == 5)
+                if (passenger.getStationTargetId() == 5)
                     passCountTarget5++;
-                else if (passenger.getTargetId() == 8)
+                else if (passenger.getStationTargetId() == 8)
                     passCountTarget8++;
-                else if (passenger.getTargetId() == 6)
+                else if (passenger.getStationTargetId() == 6)
                     passCountTarget6++;
             }
         }

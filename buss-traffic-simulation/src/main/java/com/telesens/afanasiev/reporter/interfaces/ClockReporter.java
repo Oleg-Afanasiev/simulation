@@ -1,4 +1,4 @@
-package com.telesens.afanasiev.reporter;
+package com.telesens.afanasiev.reporter.interfaces;
 
 import java.util.Date;
 

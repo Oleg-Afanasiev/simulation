@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:attribute name="id" type="xs:long" />
+    <xs:element name="passGenRules">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="targets" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="target" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute ref="id" use="required"/>
+                                    <xs:attribute name="stationId" type="xs:long" use="required"/>
+                                    <xs:attribute name="factor" type="xs:int" use="required" />
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tasks" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="task" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="linkTarget" minOccurs="1" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="targetId" type="xs:long" use="required" />
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute ref="id" use="required" />
+                                    <xs:attribute name="stationId" type="xs:long" use="required" />
+                                    <xs:attribute name="timeFrom" type="xs:dateTime" use="required" />
+                                    <xs:attribute name="duration" type="xs:int" use="required"/>
+                                    <xs:attribute name="passCount" type="xs:int" use="required" />
+                                    <xs:attribute name="minutesLimitWaiting" type="xs:int" use="required" />
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

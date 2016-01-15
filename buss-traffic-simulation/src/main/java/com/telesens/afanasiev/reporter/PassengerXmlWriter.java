@@ -1,7 +1,7 @@
 package com.telesens.afanasiev.reporter;
 
 import com.telesens.afanasiev.helper.DateTimeHelper;
-import com.telesens.afanasiev.jaxb.logs.Passengers;
+import com.telesens.afanasiev.jaxb.schemes.log.Passengers;
 import com.telesens.afanasiev.reporter.interfaces.ContentXmlWriter;
 import com.telesens.afanasiev.reporter.interfaces.PassengerLogGetter;
 import com.telesens.afanasiev.reporter.unit.PassengerLogUnit;
@@ -34,8 +34,8 @@ public class PassengerXmlWriter implements ContentXmlWriter {
                 passLog.setPassengerId(passLogUnit.getPassengerId());
                 passLog.setStationId(passLogUnit.getStationId());
                 passLog.setBusNumber(passLogUnit.getBusNumber());
-                passLog.setTimeComeIn(DateTimeHelper.timeToXMLGregorianCalendar(passLogUnit.getTimeComeIn()));
-                passLog.setTimeGoOut(DateTimeHelper.timeToXMLGregorianCalendar(passLogUnit.getTimeGoOut()));
+                passLog.setTimeComeIn(DateTimeHelper.dateToXMLGregorianCalendar(passLogUnit.getTimeComeIn()));
+                passLog.setTimeGoOut(DateTimeHelper.dateToXMLGregorianCalendar(passLogUnit.getTimeGoOut()));
 
                 JAXBElement<Passengers.Log> element = new JAXBElement<>(
                         QName.valueOf(Passengers.Log.class.getSimpleName().toLowerCase()), Passengers.Log.class, passLog);

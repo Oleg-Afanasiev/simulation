@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<busNetwork>
+    <stations>
+        <station id="1" name="Героев Труда"/>
+        <station id="5" name="Киевская"/>
+        <station id="8" name="Советская"/>
+    </stations>
+    <arcs>
+        <arc id="101" nodeLeftId="1" nodeRightId="5" duration="3"/>
+        <arc id="102" nodeLeftId="5" nodeRightId="8" duration="2"/>
+        <arc id="103" nodeLeftId="8" nodeRightId="1" duration="5"/>
+    </arcs>
+    <routes>
+        <route id="1" number="272" direct="FORWARD" cost="3.0" firstNodeId="1">
+            <arcsLink arcId="101"/>
+            <arcsLink arcId="102"/>
+            <arcsLink arcId="103"/>
+        </route>
+    </routes>
+</busNetwork>

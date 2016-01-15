@@ -1,7 +1,7 @@
 package com.telesens.afanasiev.reporter;
 
 import com.telesens.afanasiev.helper.DateTimeHelper;
-import com.telesens.afanasiev.jaxb.logs.Buses;
+import com.telesens.afanasiev.jaxb.schemes.log.Buses;
 import com.telesens.afanasiev.reporter.interfaces.BusLogGetter;
 import com.telesens.afanasiev.reporter.unit.BusLogUnit;
 import com.telesens.afanasiev.reporter.interfaces.ContentXmlWriter;
@@ -34,7 +34,7 @@ public class BusXmlWriter implements ContentXmlWriter {
                 //busLog.setBusID(busLogUnit.);
                 busLog.setBusCapacity(busLogUnit.getBusCapacity());
                 busLog.setBusNumber(busLogUnit.getBusNumber());
-                busLog.setTimeStop(DateTimeHelper.timeToXMLGregorianCalendar(busLogUnit.getTimeStop()));
+                busLog.setTimeStop(DateTimeHelper.dateToXMLGregorianCalendar(busLogUnit.getTimeStop()));
                 busLog.setRouteId(busLogUnit.getRouteId());
                 busLog.setStationId(busLogUnit.getStationId());
                 busLog.setGetOffPassCount(busLogUnit.getGetOffPassCount());

@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.*;
 
 /**
  * Created by oleg on 1/1/16.

@@ -1,7 +1,7 @@
 package com.telesens.afanasiev.reporter;
 
 import com.telesens.afanasiev.helper.DateTimeHelper;
-import com.telesens.afanasiev.jaxb.logs.Stations;
+import com.telesens.afanasiev.jaxb.schemes.log.Stations;
 import com.telesens.afanasiev.reporter.interfaces.ContentXmlWriter;
 import com.telesens.afanasiev.reporter.interfaces.StationLogGetter;
 import com.telesens.afanasiev.reporter.unit.StationLogUnit;
@@ -34,7 +34,7 @@ public class StationXmlWriter implements ContentXmlWriter {
                 stationLog.setStationId(stationLogUnit.getStationId());
                 stationLog.setBusId(stationLogUnit.getBusId());
                 stationLog.setRouteId(stationLogUnit.getRouteId());
-                stationLog.setTimeBusStop(DateTimeHelper.timeToXMLGregorianCalendar(stationLogUnit.getTimeBusStop()));
+                stationLog.setTimeBusStop(DateTimeHelper.dateToXMLGregorianCalendar(stationLogUnit.getTimeBusStop()));
                 stationLog.setBusNumber(stationLogUnit.getBusNumber());
                 stationLog.setTakeInPassCount(stationLogUnit.getTakeInPassCount());
                 stationLog.setGetOffPassCount(stationLogUnit.getGetOffPassCount());

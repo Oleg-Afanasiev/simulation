@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<passGenRules>
+    <targets>
+        <target id="1" stationId="5" factor="3"/>
+        <target id="2" stationId="8" factor="7"/>
+        <target id="3" stationId="5" factor="1"/>
+        <target id="4" stationId="8" factor="1"/>
+        <target id="5" stationId="1" factor="2"/>
+        <target id="6" stationId="8" factor="8"/>
+        <target id="7" stationId="1" factor="1"/>
+        <target id="8" stationId="8" factor="9"/>
+        <target id="9" stationId="1" factor="1"/>
+        <target id="10" stationId="1" factor="1"/>
+    </targets>
+    <tasks>
+        <task id="1" stationId="1" timeFrom="2015-12-01T07:00:00.000+02:00" duration="60" passCount="200" minutesLimitWaiting="15">
+            <linkTarget targetId="1"/>
+            <linkTarget targetId="2"/>
+        </task>
+        <task id="2" stationId="1" timeFrom="2015-12-01T08:00:00.000+02:00" duration="60" passCount="300" minutesLimitWaiting="10">
+            <linkTarget targetId="3"/>
+            <linkTarget targetId="4"/>
+        </task>
+        <task id="3" stationId="5" timeFrom="2015-12-01T07:00:00.000+02:00" duration="60" passCount="100" minutesLimitWaiting="10">
+            <linkTarget targetId="5"/>
+            <linkTarget targetId="6"/>
+        </task>
+        <task id="4" stationId="5" timeFrom="2015-12-01T08:00:00.000+02:00" duration="60" passCount="150" minutesLimitWaiting="10">
+            <linkTarget targetId="7"/>
+            <linkTarget targetId="8"/>
+        </task>
+        <task id="5" stationId="8" timeFrom="2015-12-01T07:00:00.000+02:00" duration="60" passCount="250" minutesLimitWaiting="15">
+            <linkTarget targetId="9"/>
+        </task>
+        <task id="6" stationId="8" timeFrom="2015-12-01T08:00:00.000+02:00" duration="60" passCount="350" minutesLimitWaiting="10">
+            <linkTarget targetId="10"/>
+        </task>
+    </tasks>
+</passGenRules>

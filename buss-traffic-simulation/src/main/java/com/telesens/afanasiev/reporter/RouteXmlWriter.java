@@ -1,7 +1,7 @@
 package com.telesens.afanasiev.reporter;
 
 import com.telesens.afanasiev.helper.DateTimeHelper;
-import com.telesens.afanasiev.jaxb.logs.Runs;
+import com.telesens.afanasiev.jaxb.schemes.log.Runs;
 import com.telesens.afanasiev.reporter.interfaces.ContentXmlWriter;
 import com.telesens.afanasiev.reporter.interfaces.RunLogGetter;
 import com.telesens.afanasiev.reporter.unit.RunLogUnit;
@@ -34,8 +34,8 @@ public class RouteXmlWriter implements ContentXmlWriter {
                 runLog.setRouteId(runLogUnit.getRouteId());
                 runLog.setRouteNumber(runLogUnit.getRouteNumber());
                 runLog.setBusNumber(runLogUnit.getBusNumber());
-                runLog.setTimeStart(DateTimeHelper.timeToXMLGregorianCalendar(runLogUnit.getTimeStart()));
-                runLog.setTimeFinish(DateTimeHelper.timeToXMLGregorianCalendar(runLogUnit.getTimeFinish()));
+                runLog.setTimeStart(DateTimeHelper.dateToXMLGregorianCalendar(runLogUnit.getTimeStart()));
+                runLog.setTimeFinish(DateTimeHelper.dateToXMLGregorianCalendar(runLogUnit.getTimeFinish()));
                 runLog.setPassDeliveredCount(runLogUnit.getPassDeliveredCount());
 
                 JAXBElement<Runs.Log> element = new JAXBElement<>(QName.valueOf(Runs.Log.class.getSimpleName().toLowerCase()), Runs.Log.class, runLog);

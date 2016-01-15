@@ -82,11 +82,15 @@ public class DateTimeHelper {
         return calendar.getTime();
     }
 
-    public static XMLGregorianCalendar timeToXMLGregorianCalendar(Date dateTime) {
+    public static XMLGregorianCalendar dateToXMLGregorianCalendar(Date dateTime) {
 
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         gregorianCalendar.setTime(dateTime);
 
         return new XMLGregorianCalendarImpl(gregorianCalendar);
+    }
+
+    public static Date XMLGregorianCalendarToDate(XMLGregorianCalendar xmlGregorianCalendar) {
+        return xmlGregorianCalendar.toGregorianCalendar().getTime();
     }
 }

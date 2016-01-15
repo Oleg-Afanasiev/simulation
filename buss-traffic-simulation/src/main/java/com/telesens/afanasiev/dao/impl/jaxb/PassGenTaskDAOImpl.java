@@ -3,10 +3,10 @@ package com.telesens.afanasiev.dao.impl.jaxb;
 import com.telesens.afanasiev.dao.DAOException;
 import com.telesens.afanasiev.dao.PassGenTaskDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.PassGenRules;
-import com.telesens.afanasiev.helper.DateTimeHelper;
-import com.telesens.afanasiev.rules.PassengerGenerationTask;
-import com.telesens.afanasiev.rules.impl.PassengerGenerationTaskImpl;
-import com.telesens.afanasiev.rules.impl.PassengerTargetSpreading;
+import com.telesens.afanasiev.model.helper.DateTimeHelper;
+import com.telesens.afanasiev.model.Identities.PassengerGenerationTask;
+import com.telesens.afanasiev.model.Identities.impl.PassengerGenerationTaskImpl;
+import com.telesens.afanasiev.model.rules.PassengerTargetSpreading;
 
 import java.util.ArrayList;
 import java.util.Collection;

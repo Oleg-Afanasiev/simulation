@@ -3,9 +3,9 @@ package com.telesens.afanasiev.dao.impl.jaxb;
 import com.telesens.afanasiev.dao.DAOException;
 import com.telesens.afanasiev.dao.StationDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.BusNetwork;
-import com.telesens.afanasiev.helper.DaoUtils;
-import com.telesens.afanasiev.simulation.Station;
-import com.telesens.afanasiev.simulation.impl.StationImpl;
+import com.telesens.afanasiev.model.Identities.impl.StationImpl;
+import com.telesens.afanasiev.model.helper.DaoUtils;
+import com.telesens.afanasiev.model.Identities.Station;
 
 import java.util.ArrayList;
 import java.util.Collection;

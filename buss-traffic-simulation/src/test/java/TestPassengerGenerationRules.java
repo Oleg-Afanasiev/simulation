@@ -1,7 +1,6 @@
-import com.telesens.afanasiev.helper.DateTimeHelper;
-import com.telesens.afanasiev.rules.PassengerGenerationRules;
-import com.telesens.afanasiev.rules.impl.PassengerGenerationRulesImpl;
-import com.telesens.afanasiev.rules.impl.PassengerTargetSpreading;
+import com.telesens.afanasiev.model.helper.DateTimeHelper;
+import com.telesens.afanasiev.model.rules.PassengerGenerationRules;
+import com.telesens.afanasiev.model.rules.PassengerTargetSpreading;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +18,7 @@ public class TestPassengerGenerationRules {
 
     @Before
     public void init() {
-        passGenerationRules = new PassengerGenerationRulesImpl();
+        passGenerationRules = new PassengerGenerationRules();
         Calendar calendar = new GregorianCalendar();
         calendar.set(2015, 4, 7, 8, 15);
         timeFrom = calendar.getTime();

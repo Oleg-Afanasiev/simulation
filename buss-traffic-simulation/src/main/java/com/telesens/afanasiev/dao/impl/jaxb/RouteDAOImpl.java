@@ -3,12 +3,12 @@ package com.telesens.afanasiev.dao.impl.jaxb;
 import com.telesens.afanasiev.dao.DAOException;
 import com.telesens.afanasiev.dao.RouteDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.BusNetwork;
-import com.telesens.afanasiev.helper.DaoUtils;
-import com.telesens.afanasiev.simulation.Arc;
-import com.telesens.afanasiev.simulation.Direct;
-import com.telesens.afanasiev.simulation.Identity;
-import com.telesens.afanasiev.simulation.Route;
-import com.telesens.afanasiev.simulation.impl.RouteImpl;
+import com.telesens.afanasiev.model.Identities.Arc;
+import com.telesens.afanasiev.model.Identities.Direct;
+import com.telesens.afanasiev.model.Identities.impl.RouteImpl;
+import com.telesens.afanasiev.model.helper.DaoUtils;
+import com.telesens.afanasiev.model.Identities.Identity;
+import com.telesens.afanasiev.model.Identities.Route;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

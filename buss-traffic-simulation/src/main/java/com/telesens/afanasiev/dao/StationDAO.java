@@ -1,6 +1,6 @@
 package com.telesens.afanasiev.dao;
 
-import com.telesens.afanasiev.simulation.Station;
+import com.telesens.afanasiev.model.Identities.Station;
 
 /**
  * Created by oleg on 1/12/16.

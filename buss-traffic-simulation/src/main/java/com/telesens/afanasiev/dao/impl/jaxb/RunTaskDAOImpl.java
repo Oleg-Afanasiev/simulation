@@ -3,10 +3,10 @@ package com.telesens.afanasiev.dao.impl.jaxb;
 import com.telesens.afanasiev.dao.DAOException;
 import com.telesens.afanasiev.dao.RunTaskDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.RunTimetable;
-import com.telesens.afanasiev.helper.DaoUtils;
-import com.telesens.afanasiev.helper.DateTimeHelper;
-import com.telesens.afanasiev.rules.RunTask;
-import com.telesens.afanasiev.rules.impl.RunTaskImpl;
+import com.telesens.afanasiev.model.helper.DaoUtils;
+import com.telesens.afanasiev.model.helper.DateTimeHelper;
+import com.telesens.afanasiev.model.Identities.RunTask;
+import com.telesens.afanasiev.model.Identities.impl.RunTaskImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;

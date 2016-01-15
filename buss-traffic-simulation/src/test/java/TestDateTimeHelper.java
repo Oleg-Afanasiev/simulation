@@ -1,4 +1,4 @@
-import com.telesens.afanasiev.helper.DateTimeHelper;
+import com.telesens.afanasiev.model.helper.DateTimeHelper;
 import org.junit.Before;
 import org.junit.Test;
 

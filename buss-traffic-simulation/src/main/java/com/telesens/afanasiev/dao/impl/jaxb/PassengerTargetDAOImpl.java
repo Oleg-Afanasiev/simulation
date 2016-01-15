@@ -3,9 +3,9 @@ package com.telesens.afanasiev.dao.impl.jaxb;
 import com.telesens.afanasiev.dao.DAOException;
 import com.telesens.afanasiev.dao.PassengerTargetDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.PassGenRules;
-import com.telesens.afanasiev.helper.DaoUtils;
-import com.telesens.afanasiev.rules.PassengerTarget;
-import com.telesens.afanasiev.rules.impl.PassengerTargetImpl;
+import com.telesens.afanasiev.model.helper.DaoUtils;
+import com.telesens.afanasiev.model.Identities.PassengerTarget;
+import com.telesens.afanasiev.model.Identities.impl.PassengerTargetImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;

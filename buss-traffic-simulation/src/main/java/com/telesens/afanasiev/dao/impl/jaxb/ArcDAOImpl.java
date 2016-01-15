@@ -3,10 +3,10 @@ package com.telesens.afanasiev.dao.impl.jaxb;
 import com.telesens.afanasiev.dao.ArcDAO;
 import com.telesens.afanasiev.dao.DAOException;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.BusNetwork;
-import com.telesens.afanasiev.helper.DaoUtils;
-import com.telesens.afanasiev.simulation.Arc;
-import com.telesens.afanasiev.simulation.Identity;
-import com.telesens.afanasiev.simulation.impl.ArcImpl;
+import com.telesens.afanasiev.model.Identities.Arc;
+import com.telesens.afanasiev.model.Identities.impl.ArcImpl;
+import com.telesens.afanasiev.model.helper.DaoUtils;
+import com.telesens.afanasiev.model.Identities.Identity;
 
 import java.util.ArrayList;
 import java.util.Collection;

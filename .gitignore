@@ -25,7 +25,8 @@ hs_err_pid*
 # Personal
 ###
 
-.routes/
+.gitignore
+/log4j/log.out
 
 ### 
 # Intellij 
@@ -110,7 +111,6 @@ hs_err_pid*
 /dao/target/
 
 /log4j/
-/buss-traffic-simulation/log4j/*
 
 /model/target/
 # mpeltonen

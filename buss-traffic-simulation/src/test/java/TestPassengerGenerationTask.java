@@ -1,8 +1,8 @@
-import com.telesens.afanasiev.helper.DateTimeHelper;
-import com.telesens.afanasiev.rules.PassengerGenerationTask;
-import com.telesens.afanasiev.rules.impl.PassengerGenerationRulesImpl;
-import com.telesens.afanasiev.rules.impl.PassengerTargetSpreading;
-import com.telesens.afanasiev.simulation.Passenger;
+import com.telesens.afanasiev.model.helper.DateTimeHelper;
+import com.telesens.afanasiev.model.Identities.PassengerGenerationTask;
+import com.telesens.afanasiev.model.rules.PassengerGenerationRules;
+import com.telesens.afanasiev.model.rules.PassengerTargetSpreading;
+import com.telesens.afanasiev.model.Identities.Passenger;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -16,7 +16,7 @@ import java.util.GregorianCalendar;
  */
 public class TestPassengerGenerationTask {
 
-    private PassengerGenerationRulesImpl passGenerationRules;
+    private PassengerGenerationRules passGenerationRules;
     private PassengerTargetSpreading passTargetSpreading;
     private Date timeFrom;
 
@@ -30,7 +30,7 @@ public class TestPassengerGenerationTask {
 
     @Test
     public void testIsActual() {
-        passGenerationRules = new PassengerGenerationRulesImpl();
+        passGenerationRules = new PassengerGenerationRules();
         passTargetSpreading = new PassengerTargetSpreading();
 
         passTargetSpreading.addTarget(5, 3);
@@ -67,7 +67,7 @@ public class TestPassengerGenerationTask {
 
     @Test
     public void testGetPassengersCount() {
-        passGenerationRules = new PassengerGenerationRulesImpl();
+        passGenerationRules = new PassengerGenerationRules();
         passTargetSpreading = new PassengerTargetSpreading();
 
         passTargetSpreading.addTarget(5, 3);
@@ -118,7 +118,7 @@ public class TestPassengerGenerationTask {
 
     @Test
     public void testGetPassengersSpreading() {
-        passGenerationRules = new PassengerGenerationRulesImpl();
+        passGenerationRules = new PassengerGenerationRules();
         passTargetSpreading = new PassengerTargetSpreading();
 
         passTargetSpreading.addTarget(5, 3);
@@ -203,7 +203,7 @@ public class TestPassengerGenerationTask {
 
     @Test
     public void testGetPassengersByMinutes() {
-        passGenerationRules = new PassengerGenerationRulesImpl();
+        passGenerationRules = new PassengerGenerationRules();
         passTargetSpreading = new PassengerTargetSpreading();
 
         passTargetSpreading.addTarget(5, 3);

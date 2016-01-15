@@ -1,10 +1,11 @@
-import com.telesens.afanasiev.simulation.Arc;
-import com.telesens.afanasiev.simulation.Route;
-import com.telesens.afanasiev.simulation.Station;
-import com.telesens.afanasiev.simulation.impl.ArcImpl;
-import com.telesens.afanasiev.simulation.Direct;
-import com.telesens.afanasiev.simulation.impl.RouteImpl;
-import com.telesens.afanasiev.simulation.impl.StationImpl;
+
+import com.telesens.afanasiev.model.Identities.Arc;
+import com.telesens.afanasiev.model.Identities.Direct;
+import com.telesens.afanasiev.model.Identities.Route;
+import com.telesens.afanasiev.model.Identities.Station;
+import com.telesens.afanasiev.model.Identities.impl.ArcImpl;
+import com.telesens.afanasiev.model.Identities.impl.RouteImpl;
+import com.telesens.afanasiev.model.Identities.impl.StationImpl;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -3,10 +3,10 @@ package com.telesens.afanasiev.dao.impl.jaxb;
 import com.telesens.afanasiev.dao.ArcDAO;
 import com.telesens.afanasiev.dao.DAOException;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.BusNetwork;
-import com.telesens.afanasiev.model.Identities.Arc;
-import com.telesens.afanasiev.model.Identities.impl.ArcImpl;
+import com.telesens.afanasiev.model.identities.Arc;
+import com.telesens.afanasiev.model.identities.impl.ArcImpl;
 import com.telesens.afanasiev.model.helper.DaoUtils;
-import com.telesens.afanasiev.model.Identities.Identity;
+import com.telesens.afanasiev.model.identities.Identity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +28,7 @@ public class ArcDAOImpl<T extends Identity> implements ArcDAO<T> {
 
     @Override
     public Arc<T> getById(long id) {
-        BusNetwork data = loader.getBusNetwork();
+        BusNetwork data = loader.getBusNetworkData();
         BusNetwork.Arcs.Arc arcData = parseById(data, id);
 
         if (arcData == null)
@@ -41,7 +41,7 @@ public class ArcDAOImpl<T extends Identity> implements ArcDAO<T> {
 
     @Override
     public Collection<Arc<T>> getAll() {
-        BusNetwork data = loader.getBusNetwork();
+        BusNetwork data = loader.getBusNetworkData();
         Collection<BusNetwork.Arcs.Arc> arcsData = parseAll(data);
         Collection<Arc<T>> arcs = new ArrayList<>();
         Arc<T> arc;
@@ -89,8 +89,17 @@ public class ArcDAOImpl<T extends Identity> implements ArcDAO<T> {
 
     private Arc<T> createArc(BusNetwork.Arcs.Arc arcData) {
         long id = arcData.getId();
-        T nodeLeft = nodeMap.get(arcData.getNodeLeftId());
-        T nodeRight = nodeMap.get(arcData.getNodeRightId());
+        long nodeLeftId = arcData.getNodeLeftId();
+        long nodeRightId = arcData.getNodeRightId();
+
+        if (!nodeMap.containsKey(nodeLeftId))
+            throw new DAOException("Entity with specified ID wasn't found. Id = " + nodeLeftId);
+
+        if (!nodeMap.containsKey(nodeRightId))
+            throw new DAOException("Entity with specified ID wasn't found. Id = " + nodeRightId);
+
+        T nodeLeft = nodeMap.get(nodeLeftId);
+        T nodeRight = nodeMap.get(nodeRightId);
         int duration = arcData.getDuration();
 
         ArcImpl<T> arc = new ArcImpl<>();
@@ -98,11 +107,8 @@ public class ArcDAOImpl<T extends Identity> implements ArcDAO<T> {
         arc.setNodeLeft(nodeLeft);
         arc.setNodeRight(nodeRight);
 
-        try {
-            DaoUtils.setPrivateField(arc, "id", id);
-        } catch (IllegalAccessException | NoSuchFieldException exc) {
-            exc.printStackTrace();
-        }
+        DaoUtils.setPrivateId(arc, id);
+
 
         return arc;
     }

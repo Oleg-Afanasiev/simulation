@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:attribute name="id" type="xs:long"/>
     <xs:element name="busNetwork">
         <xs:complexType>
             <xs:sequence>
@@ -8,7 +9,7 @@
                         <xs:sequence>
                             <xs:element name="station" maxOccurs="unbounded">
                                 <xs:complexType>
-                                    <xs:attribute name="id" type="xs:long" use="required"/>
+                                    <xs:attribute ref="id" use="required"/>
                                     <xs:attribute name="name" type="xs:string" use="required"/>
                                 </xs:complexType>
                             </xs:element>
@@ -21,7 +22,7 @@
                         <xs:sequence>
                             <xs:element name="arc" maxOccurs="unbounded">
                                 <xs:complexType>
-                                    <xs:attribute name="id" type="xs:long" use="required"/>
+                                    <xs:attribute ref="id" use="required"/>
                                     <xs:attribute name="nodeLeftId" type="xs:long" use="required"/>
                                     <xs:attribute name="nodeRightId" type="xs:long" use="required"/>
                                     <xs:attribute name="duration" type="xs:int" use="required"/>
@@ -39,16 +40,42 @@
                                     <xs:sequence>
                                         <xs:element name="arcsLink" minOccurs="2" maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:attribute name="arcId" type="xs:long" use="required"></xs:attribute>
+                                                <xs:attribute name="arcId" type="xs:long" use="required" />
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="id" type="xs:long" use="required"/>
+                                    <xs:attribute ref="id" use="required"/>
                                     <xs:attribute name="number" type="xs:string" use="required" />
                                     <xs:attribute name="description" type="xs:string" use="optional" />
                                     <xs:attribute name="direct" type="xs:string" use="required" />
                                     <xs:attribute name="cost" type="xs:double" use="required" />
                                     <xs:attribute name="firstNodeId" type="xs:long" use="required" />
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="simpleRoutes" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="pair" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute ref="id" use="required" />
+                                    <xs:attribute name="routeForwardId" type="xs:long" use="required"/>
+                                    <xs:attribute name="routeBackId" type="xs:long" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                
+                <xs:element name="circularRoutes" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="routeLink" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="routeId" type="xs:long" use="required" />
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>

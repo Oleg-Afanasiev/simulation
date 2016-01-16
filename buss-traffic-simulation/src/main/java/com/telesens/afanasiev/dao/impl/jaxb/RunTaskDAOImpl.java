@@ -5,8 +5,8 @@ import com.telesens.afanasiev.dao.RunTaskDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.RunTimetable;
 import com.telesens.afanasiev.model.helper.DaoUtils;
 import com.telesens.afanasiev.model.helper.DateTimeHelper;
-import com.telesens.afanasiev.model.Identities.RunTask;
-import com.telesens.afanasiev.model.Identities.impl.RunTaskImpl;
+import com.telesens.afanasiev.model.identities.RunTask;
+import com.telesens.afanasiev.model.identities.impl.RunTaskImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,12 +72,8 @@ public class RunTaskDAOImpl implements RunTaskDAO {
         int breakBackDuration = taskData.getBreakBackDuration();
 
         RunTask task = new RunTaskImpl(routeId, timeStart, breakForwardDuration, breakBackDuration);
+        DaoUtils.setPrivateId(task, id);
 
-        try {
-            DaoUtils.setPrivateField(task, "id", id);
-        } catch(IllegalAccessException | NoSuchFieldException exc) {
-            exc.printStackTrace();;
-        }
 
         return task;
     }

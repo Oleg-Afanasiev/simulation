@@ -1,6 +1,6 @@
 package com.telesens.afanasiev.model.simulation;
 
-import com.telesens.afanasiev.model.Identities.*;
+import com.telesens.afanasiev.model.identities.*;
 import com.telesens.afanasiev.model.reporter.interfaces.BusReporter;
 import com.telesens.afanasiev.model.reporter.LogCollector;
 import com.telesens.afanasiev.model.reporter.interfaces.RunReporter;
@@ -23,7 +23,8 @@ public class BusRun implements Observer{
 
     private BusReporter logCollector;
 
-    @Getter private Bus bus;
+    @Getter
+    private Bus bus;
     private Route<Station> routeForward;
     private Route<Station> routeBack; // if routeBack == null => type of routeForward is CIRCULAR
     private Route<Station> currentRoute;

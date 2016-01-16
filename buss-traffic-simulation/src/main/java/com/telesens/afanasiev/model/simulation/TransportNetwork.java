@@ -1,7 +1,7 @@
-package com.telesens.afanasiev.model.Identities;
+package com.telesens.afanasiev.model.simulation;
 
-import com.telesens.afanasiev.model.Identities.impl.RouteImpl;
-import com.telesens.afanasiev.model.helper.DaoUtils;
+import com.telesens.afanasiev.model.identities.*;
+import com.telesens.afanasiev.model.identities.impl.RoutePairImpl;
 
 import java.util.*;
 
@@ -13,11 +13,16 @@ public class TransportNetwork implements com.telesens.afanasiev.model.simulation
     private volatile static TransportNetwork uniqueInstance;
 
     private Set<Arc<Station>> arcs;
-    private Collection<Route<Station>> routes;
+
+    private Collection<Route<Station>> allRoutesBuff;
+    private Collection<Route<Station>> circRoutes;
+    private Collection<RoutePair<Station>> simpleRoutes;
 
     private TransportNetwork() {
         arcs = new HashSet<>();
-        routes = new ArrayList<>();
+        circRoutes = new ArrayList<>();
+        simpleRoutes = new ArrayList<>();
+        allRoutesBuff = new ArrayList<>();
     }
 
     public static TransportNetwork getInstance() {
@@ -31,32 +36,29 @@ public class TransportNetwork implements com.telesens.afanasiev.model.simulation
         return uniqueInstance;
     }
 
-    @SafeVarargs
-    public final void createRoute(long id, String number, String description, Direct direct, double cost, Station firstStation, Arc<Station>...listArcs)
-        throws NoSuchFieldException, IllegalAccessException {
-
-        createRoute(id, number, description, direct, cost, firstStation, Arrays.asList(listArcs));
+    public void registerCircularRoute(Route<Station> route) {
+        readArcs(route);
+        if (!isRegisteredRoute(route))
+            circRoutes.add(route);
     }
 
-    public void createRoute(long id, String number, String description, Direct direct, double cost, Station firstStation, List<Arc<Station>> listArcs)
-            throws NoSuchFieldException, IllegalAccessException {
-        arcs.addAll(listArcs);
-
-        Route<Station> route = new RouteImpl<>(number, description, direct, cost, firstStation, listArcs);
-        DaoUtils.setPrivateField(route, "ID", id);
-
-        routes.add(route);
+    public void registerSimpleRoute(Route<Station> routeForward, Route<Station> routeBack) {
+        RoutePair<Station> pair = new RoutePairImpl<>(routeForward, routeBack);
+        registerSimpleRoute(pair);
     }
 
-    public void addRoute(Route<Station> route) {
-        for (Arc<Station> arc : route)
-            arcs.add(arc);
-
-        routes.add(route);
+    public void registerSimpleRoute(RoutePair<Station> pair) {
+        if (!isRegisteredRoute(pair.getForwardRoute()) && !isRegisteredRoute(pair.getBackRoute())) {
+            readArcs(pair.getForwardRoute());
+            readArcs(pair.getBackRoute());
+            allRoutesBuff.add(pair.getForwardRoute());
+            allRoutesBuff.add(pair.getBackRoute());
+            simpleRoutes.add(pair);
+        }
     }
 
     public Route getRouteById(long id) {
-        for (Route route : routes) {
+        for (Route route : allRoutesBuff) {
             if (route.getId() == id)
                 return route;
         }
@@ -64,7 +66,7 @@ public class TransportNetwork implements com.telesens.afanasiev.model.simulation
     }
 
     public Route getRouteByNumber(String number) {
-        for (Route route : routes) {
+        for (Route route : allRoutesBuff) {
             if (route.getNumber().equals(number)) {
                 return route;
             }
@@ -72,14 +74,22 @@ public class TransportNetwork implements com.telesens.afanasiev.model.simulation
         return null;
     }
 
+    public Collection<Route<Station>> getAllCircRoutes() {
+        return circRoutes;
+    }
+
+    public Collection<RoutePair<Station>> getAllSimpleRoutes() {
+        return simpleRoutes;
+    }
+
     public Collection<Route<Station>> getAllRoutes() {
-        return routes;
+        return allRoutesBuff;
     }
 
     public String allRoutesToString() {
         StringBuilder sb = new StringBuilder();
 
-        for (Route route : routes)
+        for (Route route : allRoutesBuff)
             sb.append(String.format("%s %n%n", route));
 
         return sb.toString();
@@ -94,7 +104,7 @@ public class TransportNetwork implements com.telesens.afanasiev.model.simulation
     }
 
     public Station getStationById(long id) {
-        for (Route<Station> route : routes) {
+        for (Route<Station> route : allRoutesBuff) {
             for (Arc<Station> arc : route)
                 if (arc.getNodeLeft().getId() == id)
                     return arc.getNodeLeft();
@@ -130,10 +140,18 @@ public class TransportNetwork implements com.telesens.afanasiev.model.simulation
         return listOfStations;
     }
 
-    private void addArcs(Arc<Station>...listArcs) {
-        for (Arc<Station> arc : listArcs)
+    private void readArcs(Route<Station> route) {
+        for (Arc<Station> arc : route)
             if (!arcs.contains(arc))
                 arcs.add(arc);
+    }
+
+    private boolean isRegisteredRoute(Route<Station> route){
+        for (Route<Station> routeBuff : allRoutesBuff)
+            if (route.getId() == routeBuff.getId())
+                return true;
+
+        return false;
     }
 
 }

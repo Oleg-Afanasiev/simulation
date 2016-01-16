@@ -1,20 +1,110 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <busNetwork>
     <stations>
-        <station id="1" name="Героев Труда"/>
+        <station id="1" name="Тахиаташская"/>
         <station id="5" name="Киевская"/>
+        <station id="6" name="Горбатый мост"/>
+        <station id="7" name="Московский пр."/>
         <station id="8" name="Советская"/>
+        <station id="15" name="Парк Горького"/>
+        <station id="25" name="Барабашова"/>
+        <station id="36" name="Площадь Фейербаха"/>
+        <station id="47" name="Площадь восстания"/>
+        <station id="101" name="Тахиаташская"/>
+        <station id="105" name="Киевская"/>
+        <station id="106" name="Горбатый мост"/>
+        <station id="107" name="Московский пр."/>
+        <station id="108" name="Советская"/>
+        <station id="115" name="Парк Горького"/>
+        <station id="125" name="Барабашова"/>
+        <station id="136" name="Площадь Фейербаха"/>
+        <station id="147" name="Площадь восстания"/>
     </stations>
     <arcs>
         <arc id="101" nodeLeftId="1" nodeRightId="5" duration="3"/>
-        <arc id="102" nodeLeftId="5" nodeRightId="8" duration="2"/>
-        <arc id="103" nodeLeftId="8" nodeRightId="1" duration="5"/>
+        <arc id="102" nodeLeftId="5" nodeRightId="6" duration="2"/>
+        <arc id="103" nodeLeftId="6" nodeRightId="7" duration="5"/>
+        <arc id="104" nodeLeftId="7" nodeRightId="8" duration="5"/>
+        <arc id="115" nodeLeftId="15" nodeRightId="5" duration="6"/>
+        <arc id="215" nodeLeftId="25" nodeRightId="5" duration="7"/>
+        <arc id="315" nodeLeftId="36" nodeRightId="6" duration="3"/>
+        <arc id="415" nodeLeftId="47" nodeRightId="7" duration="4"/>
+
+        <arc id="1101" nodeLeftId="101" nodeRightId="105" duration="3"/>
+        <arc id="1102" nodeLeftId="105" nodeRightId="106" duration="2"/>
+        <arc id="1103" nodeLeftId="106" nodeRightId="107" duration="5"/>
+        <arc id="1104" nodeLeftId="107" nodeRightId="108" duration="5"/>
+        <arc id="1115" nodeLeftId="115" nodeRightId="105" duration="6"/>
+        <arc id="1215" nodeLeftId="125" nodeRightId="105" duration="7"/>
+        <arc id="1315" nodeLeftId="136" nodeRightId="106" duration="3"/>
+        <arc id="1415" nodeLeftId="147" nodeRightId="107" duration="4"/>
     </arcs>
     <routes>
-        <route id="1" number="272" direct="FORWARD" cost="3.0" firstNodeId="1">
+        <route id="1" number="171" direct="FORWARD" cost="4.25" firstNodeId="1" pairRouteId="11">
+            <arcsLink arcId="101"/>
+            <arcsLink arcId="102"/>
+            <arcsLink arcId="315"/>
+        </route>
+        <route id="11" number="171" direct="BACK" cost="4.25" firstNodeId="136" pairRouteId="1">
+            <arcsLink arcId="1315"/>
+            <arcsLink arcId="1102"/>
+            <arcsLink arcId="1101"/>
+        </route>
+
+        <route id="2" number="172" direct="FORWARD" cost="5.0" firstNodeId="1" pairRouteId="12">
             <arcsLink arcId="101"/>
             <arcsLink arcId="102"/>
             <arcsLink arcId="103"/>
+            <arcsLink arcId="415"/>
+        </route>
+        <route id="12" number="172" direct="BACK" cost="5.0" firstNodeId="147" pairRouteId="2">
+            <arcsLink arcId="1415"/>
+            <arcsLink arcId="1103"/>
+            <arcsLink arcId="1102"/>
+            <arcsLink arcId="1101"/>
+        </route>
+
+        <route id="3" number="173" direct="FORWARD" cost="3.0" firstNodeId="1" pairRouteId="13">
+            <arcsLink arcId="101"/>
+            <arcsLink arcId="215"/>
+        </route>
+        <route id="13" number="173" direct="BACK" cost="3.0" firstNodeId="125" pairRouteId="3">
+            <arcsLink arcId="1215"/>
+            <arcsLink arcId="1101"/>
+        </route>
+
+        <route id="4" number="174" direct="FORWARD" cost="4.5" firstNodeId="15" pairRouteId="14">
+            <arcsLink arcId="115"/>
+            <arcsLink arcId="102"/>
+            <arcsLink arcId="103"/>
+            <arcsLink arcId="104"/>
+        </route>
+        <route id="14" number="174" direct="BACK" cost="4.5" firstNodeId="108" pairRouteId="4">
+            <arcsLink arcId="1104"/>
+            <arcsLink arcId="1103"/>
+            <arcsLink arcId="1102"/>
+            <arcsLink arcId="1115"/>
+        </route>
+
+        <route id="5" number="175" direct="FORWARD" cost="3.75" firstNodeId="36" pairRouteId="15">
+            <arcsLink arcId="315"/>
+            <arcsLink arcId="103"/>
+            <arcsLink arcId="104"/>
+        </route>
+        <route id="15" number="175" direct="BACK" cost="3.75" firstNodeId="108" pairRouteId="5">
+            <arcsLink arcId="1104"/>
+            <arcsLink arcId="1103"/>
+            <arcsLink arcId="1315"/>
         </route>
     </routes>
+    <simpleRoutes>
+        <pair id="1" routeForwardId="1" routeBackId="11"/>
+        <pair id="2" routeForwardId="2" routeBackId="12"/>
+        <pair id="3" routeForwardId="3" routeBackId="13"/>
+        <pair id="4" routeForwardId="4" routeBackId="14"/>
+        <pair id="5" routeForwardId="5" routeBackId="15"/>
+    </simpleRoutes>
+    <circularRoutes>
+
+    </circularRoutes>
 </busNetwork>

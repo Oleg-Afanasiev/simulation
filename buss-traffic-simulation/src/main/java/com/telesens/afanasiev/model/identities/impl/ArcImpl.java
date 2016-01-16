@@ -1,7 +1,7 @@
-package com.telesens.afanasiev.model.Identities.impl;
+package com.telesens.afanasiev.model.identities.impl;
 
-import com.telesens.afanasiev.model.Identities.Arc;
-import com.telesens.afanasiev.model.Identities.Identity;
+import com.telesens.afanasiev.model.identities.Arc;
+import com.telesens.afanasiev.model.identities.Identity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class ArcImpl<T> extends IdentityImpl implements Arc<T>, Identity {
+public class ArcImpl<T extends Identity> extends IdentityImpl implements Arc<T>, Identity {
     private static final long serialVersionUID = 1L;
 
     public static class EqualNodesException extends RuntimeException {
@@ -42,7 +42,7 @@ public class ArcImpl<T> extends IdentityImpl implements Arc<T>, Identity {
             throw new EqualNodesException("ErrorNodesInit! Two nodes must be differ");
 
         if (duration <= 0)
-            throw new IllegalArgumentException("Incorrect duration for 'ArcImpl'. Duration must be positive");
+            throw new IllegalArgumentException("Incorrect duration for 'Arc'. Duration must be positive");
 
         this.nodeLeft = nodeLeft;
         this.nodeRight = nodeRight;

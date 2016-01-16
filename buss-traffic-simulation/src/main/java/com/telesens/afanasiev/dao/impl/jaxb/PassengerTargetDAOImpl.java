@@ -4,8 +4,8 @@ import com.telesens.afanasiev.dao.DAOException;
 import com.telesens.afanasiev.dao.PassengerTargetDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.PassGenRules;
 import com.telesens.afanasiev.model.helper.DaoUtils;
-import com.telesens.afanasiev.model.Identities.PassengerTarget;
-import com.telesens.afanasiev.model.Identities.impl.PassengerTargetImpl;
+import com.telesens.afanasiev.model.identities.PassengerTarget;
+import com.telesens.afanasiev.model.identities.impl.PassengerTargetImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -79,11 +79,7 @@ public class PassengerTargetDAOImpl implements PassengerTargetDAO {
 
         PassengerTarget target = new PassengerTargetImpl(stationId, factor);
 
-        try {
-            DaoUtils.setPrivateField(target, "id", id);
-        } catch (NoSuchFieldException | IllegalAccessException exc) {
-            exc.printStackTrace();
-        }
+        DaoUtils.setPrivateId(target, id);
 
         return target;
     }

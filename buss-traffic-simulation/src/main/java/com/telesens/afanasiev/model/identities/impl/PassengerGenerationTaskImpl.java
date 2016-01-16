@@ -1,9 +1,9 @@
-package com.telesens.afanasiev.model.Identities.impl;
+package com.telesens.afanasiev.model.identities.impl;
 
+import com.telesens.afanasiev.model.identities.Passenger;
 import com.telesens.afanasiev.model.helper.DateTimeHelper;
-import com.telesens.afanasiev.model.Identities.PassengerGenerationTask;
-import com.telesens.afanasiev.model.Identities.Identity;
-import com.telesens.afanasiev.model.Identities.Passenger;
+import com.telesens.afanasiev.model.identities.PassengerGenerationTask;
+import com.telesens.afanasiev.model.identities.Identity;
 import com.telesens.afanasiev.model.rules.PassengerTargetSpreading;
 import lombok.*;
 
@@ -12,27 +12,16 @@ import java.util.*;
 /**
  * Created by oleg on 1/5/16.
  */
+@Data
 @NoArgsConstructor
 public class PassengerGenerationTaskImpl extends IdentityImpl implements PassengerGenerationTask, Identity {
     private static final long serialVersionUID = 1L;
 
-    @Getter
-    @Setter
     private long stationId;
-    @Getter
-    @Setter
     private Date timeFrom;  // 'timeFrom' - inclusive
-    @Getter
-    @Setter
     private int duration; // 'timeFrom' + 'duration' - exclusive
-    @Getter
-    @Setter
     private int passCount;
-    @Getter
-    @Setter
     private int minutesLimitWaiting; //how much minutes
-    @Getter
-    @Setter
     private PassengerTargetSpreading passTargetSpreading;
 
     private transient final int TIME_GEN_MAX_STEP = 3; // minutes
@@ -47,13 +36,15 @@ public class PassengerGenerationTaskImpl extends IdentityImpl implements Passeng
         this.passTargetSpreading = passTargetSpreading;
     }
 
-    public boolean isActual(Date curTime) {
-        int diff = DateTimeHelper.diffMinutes(timeFrom, curTime);
+    @Override
+    public boolean isActual(Date actualTime) {
+        int diff = DateTimeHelper.diffMinutes(timeFrom, actualTime);
 
         return (diff < duration) && (diff >= 0);
     }
 
-    public Collection<Passenger> getPassengers(Date curTime) {
+    @Override
+    public Collection<Passenger> getPassengers(Date actualTime) {
         Collection<Passenger> passengers;
 
         if (passTimeSpreading == null) {
@@ -61,7 +52,7 @@ public class PassengerGenerationTaskImpl extends IdentityImpl implements Passeng
             generatePassengers();
         }
 
-        int diffMinutes = DateTimeHelper.diffMinutes(timeFrom, curTime);
+        int diffMinutes = DateTimeHelper.diffMinutes(timeFrom, actualTime);
 
         if (!passTimeSpreading.containsKey(diffMinutes))
             passengers = new ArrayList<>();
@@ -87,7 +78,7 @@ public class PassengerGenerationTaskImpl extends IdentityImpl implements Passeng
             if (passTimeSpreading.get(nextTime) == null)
                 passTimeSpreading.put(nextTime, new ArrayList<>());
 
-            passTimeSpreading.get(nextTime).add(new Passenger(stationId, targetId, minutesLimitWaiting));
+            passTimeSpreading.get(nextTime).add(new PassengerImpl(stationId, targetId, minutesLimitWaiting));
         }
     }
 }

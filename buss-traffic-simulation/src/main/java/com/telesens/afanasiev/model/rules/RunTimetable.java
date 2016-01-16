@@ -1,7 +1,7 @@
 package com.telesens.afanasiev.model.rules;
 
-import com.telesens.afanasiev.model.Identities.RunTask;
-import com.telesens.afanasiev.model.Identities.impl.RunTaskImpl;
+import com.telesens.afanasiev.model.identities.RunTask;
+import com.telesens.afanasiev.model.identities.impl.RunTaskImpl;
 import lombok.Getter;
 import lombok.Setter;
 

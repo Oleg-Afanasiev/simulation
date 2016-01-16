@@ -43,7 +43,7 @@ public class DAOLoaderData {
         return (RunTimetable)getData(fileRunTimetableXML, RunTimetable.class);
     }
 
-    public BusNetwork getBusNetwork() {
+    public BusNetwork getBusNetworkData() {
         return (BusNetwork)getData(fileBusNetWorkXML, BusNetwork.class);
     }
 

@@ -1,8 +1,8 @@
 package com.telesens.afanasiev.model.simulation;
 
-import com.telesens.afanasiev.model.Identities.Route;
-import com.telesens.afanasiev.model.Identities.Station;
-import com.telesens.afanasiev.model.Identities.TransportNetwork;
+import com.telesens.afanasiev.model.identities.Route;
+import com.telesens.afanasiev.model.identities.RoutePair;
+import com.telesens.afanasiev.model.identities.Station;
 import com.telesens.afanasiev.model.helper.DateTimeHelper;
 import com.telesens.afanasiev.model.rules.PassengerGenerationRules;
 import com.telesens.afanasiev.model.rules.RunTimetable;
@@ -17,7 +17,7 @@ import java.util.*;
 public class BusTrafficSimulator implements Runnable {
     private Clock clock;
     private PassengerScheduler passengerScheduler;
-    private Collection<RouteDispatcher> routesDispatcher;
+    private Collection<RouteDispatcher> routeDispatchers;
     private TransportNetwork busNetwork;
     private RunTimetable runTimetable;
 
@@ -32,15 +32,12 @@ public class BusTrafficSimulator implements Runnable {
 
         this.busNetwork = busNetwork;
         reportCollector = LogCollector.getInstance();
-        routesDispatcher = new ArrayList<>();
         passengerScheduler = new PassengerScheduler(passGenerationRules);
         this.runTimetable = runTimetable;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
 
-        for (Route<Station> route : busNetwork.getAllRoutes())
-            routesDispatcher.add(new RouteDispatcher(route));
-
+        initRouteDispatchers(busNetwork);
         passengerScheduler.registerRoutes(busNetwork.getAllRoutes());
     }
 
@@ -57,7 +54,7 @@ public class BusTrafficSimulator implements Runnable {
             passengerScheduler.tick(actualTime);
             long routeId;
             Date timeStart;
-            for (RouteDispatcher routeDispatcher : routesDispatcher) {
+            for (RouteDispatcher routeDispatcher : routeDispatchers) {
                 routeDispatcher.tick(actualTime);
                 routeId = routeDispatcher.getRouteForwardId();
 
@@ -85,5 +82,14 @@ public class BusTrafficSimulator implements Runnable {
     @Override
     public void run() {
         start();
+    }
+
+    private void initRouteDispatchers(TransportNetwork busNetwork ) {
+        routeDispatchers = new ArrayList<>();
+        for (Route<Station> routeCird : busNetwork.getAllCircRoutes())
+            routeDispatchers.add(new RouteDispatcher(routeCird));
+
+        for (RoutePair<Station> routePair : busNetwork.getAllSimpleRoutes())
+            routeDispatchers.add(new RouteDispatcher(routePair.getForwardRoute(), routePair.getBackRoute()));
     }
 }

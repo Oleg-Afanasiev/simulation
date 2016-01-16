@@ -1,7 +1,7 @@
 package com.telesens.afanasiev.model.simulation;
 
-import com.telesens.afanasiev.model.Identities.Direct;
-import com.telesens.afanasiev.model.Identities.TransportNetwork;
+import com.telesens.afanasiev.dao.DAOException;
+import com.telesens.afanasiev.model.identities.Direct;
 import com.telesens.afanasiev.model.helper.DateTimeHelper;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.BusNetwork;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.PassGenRules;
@@ -49,16 +49,22 @@ public class Main {
 
         initFromTo();
 
-        xmlBusNetwork = initBusNetwork();
+        //xmlBusNetwork = initBusNetwork();
         xmlRunTimetable = initTimeTable();
         xmlPassGenRules = initPassGenerationRules();
 
-        writeXmlButNetwork(xmlBusNetwork);
+        //writeXmlButNetwork(xmlBusNetwork);
         writeXmlTimeTable(xmlRunTimetable);
         writeXmlPassGenRules(xmlPassGenRules);
 
-
-        TransportNetwork busNetwork = dataLoader.loadBusNetwork();
+        TransportNetwork busNetwork;
+        try {
+            busNetwork = dataLoader.loadBusNetwork();
+        } catch (IllegalArgumentException | DAOException exc) {
+            System.out.println("Не удалось загрузить схему маршрутов");
+            exc.printStackTrace();
+            return;
+        }
         RunTimetable runTimetable = dataLoader.loadRunTimetable();
         PassengerGenerationRules passGenerationRules = dataLoader.loadPassGenRules();
 
@@ -84,10 +90,10 @@ public class Main {
         BusNetwork busNetwork = new BusNetwork();
         //busNetwork = TransportNetwork.getInstance();
 
-        int countStations = 14;
-        BusNetwork.Stations.Station[] stations = new BusNetwork.Stations.Station[countStations];
+        final int N_STATIONS = 18;
+        BusNetwork.Stations.Station[] stations = new BusNetwork.Stations.Station[N_STATIONS];
 
-        for (int i = 0; i < countStations; i++) {
+        for (int i = 0; i < N_STATIONS; i++) {
             stations[i] = new BusNetwork.Stations.Station();
             stations[i].setId(i+1);
         }
@@ -108,6 +114,12 @@ public class Main {
         stations[11].setName("Тахиаташская");
         stations[12].setName("Жилярди");
         stations[13].setName("Караван");
+
+        stations[14].setName("Парк Горького");
+        stations[15].setName("Барабашова");
+        stations[16].setName("Горбатый мост");
+        stations[17].setName("Площадь Фейербаха");
+        stations[18].setName("Площадь Восстания");
 
 //        busNetwork.createRoute(1_272, "272", "", Direct.FORWARD, 5.50, stations[0],
 //                new ArcImpl<>(stations[0], stations[1], 3),

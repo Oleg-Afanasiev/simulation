@@ -6,10 +6,11 @@ import com.telesens.afanasiev.dao.StationDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.ArcDAOImpl;
 import com.telesens.afanasiev.dao.impl.jaxb.RouteDAOImpl;
 import com.telesens.afanasiev.dao.impl.jaxb.StationDAOImpl;
-import com.telesens.afanasiev.model.Identities.Arc;
-import com.telesens.afanasiev.model.Identities.Route;
-import com.telesens.afanasiev.model.Identities.Station;
-import com.telesens.afanasiev.model.Identities.TransportNetwork;
+import com.telesens.afanasiev.model.identities.Arc;
+import com.telesens.afanasiev.model.identities.Route;
+import com.telesens.afanasiev.model.identities.RoutePair;
+import com.telesens.afanasiev.model.identities.Station;
+import com.telesens.afanasiev.model.simulation.TransportNetwork;
 
 import java.util.*;
 
@@ -29,10 +30,16 @@ public class TransportNetworkLoader {
         RouteDAO<Station> routeDAO = new RouteDAOImpl<>(stations, arcs);
         Collection<Route<Station>> routes = routeDAO.getAll();
 
+        Collection<Route<Station>> circRoutes = routeDAO.getAllCircular(routes);
+        Collection<RoutePair<Station>> simpleRoutes = routeDAO.getAllSimple(routes);
+
         TransportNetwork busNetwork = TransportNetwork.getInstance();
 
-        for (Route<Station> route : routes)
-            busNetwork.addRoute(route);
+        for (Route<Station> route : circRoutes)
+            busNetwork.registerCircularRoute(route);
+
+        for (RoutePair<Station> pairRoute : simpleRoutes)
+            busNetwork.registerSimpleRoute(pairRoute);
 
         return busNetwork;
     }

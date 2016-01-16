@@ -1,8 +1,8 @@
+import com.telesens.afanasiev.model.identities.Passenger;
 import com.telesens.afanasiev.model.helper.DateTimeHelper;
-import com.telesens.afanasiev.model.Identities.PassengerGenerationTask;
+import com.telesens.afanasiev.model.identities.PassengerGenerationTask;
 import com.telesens.afanasiev.model.rules.PassengerGenerationRules;
 import com.telesens.afanasiev.model.rules.PassengerTargetSpreading;
-import com.telesens.afanasiev.model.Identities.Passenger;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

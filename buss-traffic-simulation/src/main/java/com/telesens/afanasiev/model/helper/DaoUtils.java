@@ -1,5 +1,7 @@
 package com.telesens.afanasiev.model.helper;
 
+import com.telesens.afanasiev.model.identities.Identity;
+
 import java.lang.reflect.Field;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class DaoUtils {
      * This method collects all private fields from entity  class, his ancestors till Object class,
      * takes field with defined name and sets defined value.
      */
-    public static void setPrivateField(Object entity, String fieldName, Object value) throws NoSuchFieldException, IllegalAccessException {
+    private static void setPrivateField(Object entity, String fieldName, Object value) throws NoSuchFieldException, IllegalAccessException {
         List<Field> fields;
         Class clazz = entity.getClass();
         while (!clazz.equals(Object.class)) {
@@ -32,6 +34,14 @@ public class DaoUtils {
                 }
             }
             clazz = clazz.getSuperclass();
+        }
+    }
+
+    public static <T extends Identity>void setPrivateId(T identity, long id) {
+        try {
+            setPrivateField(identity, "id", id);
+        } catch (NoSuchFieldException | IllegalAccessException exc) {
+            exc.printStackTrace();
         }
     }
 }

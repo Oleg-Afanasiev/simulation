@@ -3,9 +3,9 @@ package com.telesens.afanasiev.dao.impl.jaxb;
 import com.telesens.afanasiev.dao.DAOException;
 import com.telesens.afanasiev.dao.StationDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.schemes.BusNetwork;
-import com.telesens.afanasiev.model.Identities.impl.StationImpl;
+import com.telesens.afanasiev.model.identities.impl.StationImpl;
 import com.telesens.afanasiev.model.helper.DaoUtils;
-import com.telesens.afanasiev.model.Identities.Station;
+import com.telesens.afanasiev.model.identities.Station;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +23,7 @@ public class StationDAOImpl implements StationDAO {
 
     @Override
     public Station getById(long id) {
-        BusNetwork data = loaderData.getBusNetwork();
+        BusNetwork data = loaderData.getBusNetworkData();
         BusNetwork.Stations.Station stationData = parseById(data, id);
         if (stationData == null)
             throw new DAOException("Entity with specified ID wasn't found. Id = " + id);
@@ -35,7 +35,7 @@ public class StationDAOImpl implements StationDAO {
 
     @Override
     public Collection<Station> getAll() {
-        BusNetwork data = loaderData.getBusNetwork();
+        BusNetwork data = loaderData.getBusNetworkData();
         Collection<BusNetwork.Stations.Station> stationsData = parseAll(data);
         Collection<Station> stations = new ArrayList<>();
         Station station;
@@ -71,11 +71,7 @@ public class StationDAOImpl implements StationDAO {
         Station station = new StationImpl();
         station.setName(name);
 
-        try {
-            DaoUtils.setPrivateField(station, "id", id);
-        } catch(IllegalAccessException | NoSuchFieldException exc) {
-            exc.printStackTrace();
-        }
+        DaoUtils.setPrivateId(station, id);
 
         return station;
     }

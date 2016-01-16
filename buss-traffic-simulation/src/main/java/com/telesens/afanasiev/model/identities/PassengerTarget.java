@@ -1,6 +1,4 @@
-package com.telesens.afanasiev.model.Identities;
-
-import com.telesens.afanasiev.model.Identities.Identity;
+package com.telesens.afanasiev.model.identities;
 
 /**
  * Created by oleg on 1/14/16.

@@ -3,7 +3,7 @@ package com.telesens.afanasiev.model.loader;
 import com.telesens.afanasiev.dao.PassGenTaskDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.PassGenTaskDAOImpl;
 import com.telesens.afanasiev.model.rules.PassengerGenerationRules;
-import com.telesens.afanasiev.model.Identities.PassengerGenerationTask;
+import com.telesens.afanasiev.model.identities.PassengerGenerationTask;
 
 import java.util.Collection;
 

@@ -1,6 +1,6 @@
-package com.telesens.afanasiev.model.Identities.impl;
+package com.telesens.afanasiev.model.identities.impl;
 
-import com.telesens.afanasiev.model.Identities.*;
+import com.telesens.afanasiev.model.identities.*;
 import com.telesens.afanasiev.model.helper.DaoUtils;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.*;
  */
 @Data
 @NoArgsConstructor
-public class RouteImpl<T> extends IdentityImpl implements Route<T>, Identity, Iterable<Arc<T>> {
+public class RouteImpl<T extends Identity> extends IdentityImpl implements Route<T>, Identity, Iterable<Arc<T>> {
     class RouteIterator implements Iterator<Arc<T>> {
         private int iteratorCursor = -1;
 
@@ -36,6 +36,7 @@ public class RouteImpl<T> extends IdentityImpl implements Route<T>, Identity, It
     private Direct direct;
     private double cost;
     private T firstNode;
+    private long pairRouteId; // it means routes: 'FORWARD' <-> 'BACK'
 
     @SafeVarargs
     public RouteImpl(String number, String description, Direct direct, double cost, T firstNode, Arc<T>... listArcs) {
@@ -90,11 +91,11 @@ public class RouteImpl<T> extends IdentityImpl implements Route<T>, Identity, It
     }
 
     @Override
-    public void createLastArc(long arcID, T rightNode, int duration) throws NoSuchFieldException, IllegalAccessException {
+    public void createLastArc(long arcID, T rightNode, int duration) {
 
         T leftNode = getLastNode();
         Arc<T> arc = new ArcImpl<>(leftNode, rightNode, duration);
-        DaoUtils.setPrivateField(arc, "Id", arcID);
+        DaoUtils.setPrivateId(arc, arcID);
 
         arcs.add(arc);
     }

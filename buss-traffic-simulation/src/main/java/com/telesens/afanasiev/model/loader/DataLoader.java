@@ -1,6 +1,6 @@
 package com.telesens.afanasiev.model.loader;
 
-import com.telesens.afanasiev.model.Identities.TransportNetwork;
+import com.telesens.afanasiev.model.simulation.TransportNetwork;
 import com.telesens.afanasiev.model.rules.PassengerGenerationRules;
 import com.telesens.afanasiev.model.rules.RunTimetable;
 
@@ -8,25 +8,6 @@ import com.telesens.afanasiev.model.rules.RunTimetable;
  * Created by oleg on 1/11/16.
  */
 public class DataLoader {
-    public static class NoValidLoadDataException extends RuntimeException {
-        private String msg;
-        private String baseMsg = "Incorrect load data. ";
-        public NoValidLoadDataException() {
-            msg = "";
-        }
-
-        public NoValidLoadDataException(String msg) {
-            this.msg = msg;
-        }
-
-        @Override
-        public String toString() {
-            if (msg.equals(""))
-                return baseMsg;
-            else
-                return msg;
-        }
-    }
 
     private TransportNetworkLoader transportNetworkLoader;
     private RunTimeTableLoader runTimeTableLoader;

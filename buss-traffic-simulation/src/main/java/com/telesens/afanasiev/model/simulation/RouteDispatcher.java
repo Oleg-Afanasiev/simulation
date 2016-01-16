@@ -1,6 +1,7 @@
 package com.telesens.afanasiev.model.simulation;
 
-import com.telesens.afanasiev.model.Identities.*;
+import com.telesens.afanasiev.model.identities.*;
+import com.telesens.afanasiev.model.identities.impl.BusImpl;
 import com.telesens.afanasiev.model.helper.DaoUtils;
 import com.telesens.afanasiev.model.reporter.LogCollector;
 import com.telesens.afanasiev.model.reporter.interfaces.RouteReporter;
@@ -47,9 +48,9 @@ public class RouteDispatcher implements Observer{
     }
 
     public void registerSimpleRoute(Route<Station> routeForward, Route<Station> routeBack) {
-        if (routeForward.getFirstNode() != routeBack.getLastNode() ||
-                routeForward.getLastNode() != routeBack.getFirstNode())
-            throw new IllegalArgumentException("Incorrect pair of routes.");
+       // if (routeForward.getFirstNode() != routeBack.getLastNode() ||
+           //     routeForward.getLastNode() != routeBack.getFirstNode())
+           // throw new IllegalArgumentException("Incorrect pair of routes.");
 
         this.routeForward = routeForward;
         this.routeBack = routeBack;
@@ -86,12 +87,9 @@ public class RouteDispatcher implements Observer{
     public void runNextBus(RunTask runTask) {
         if (waitingBuses.size() == 0) {
             Random random = new Random();
-            Bus bus = new Bus(BUS_CAPACITY, "АX-" + (random.nextInt(8999) + 1000) + "-AA");
-            try {
-                DaoUtils.setPrivateField(bus, "ID", random.nextInt(1000000));
-            } catch(NoSuchFieldException | IllegalAccessException exc) {
-                exc.printStackTrace();
-            }
+            Bus bus = new BusImpl(BUS_CAPACITY, "АX-" + (random.nextInt(8999) + 1000) + "-AA");
+
+            DaoUtils.setPrivateId(bus, random.nextInt(1000000));
 
             waitingBuses.add(bus);
         }

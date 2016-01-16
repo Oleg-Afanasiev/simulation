@@ -1,6 +1,6 @@
 package com.telesens.afanasiev.dao;
 
-import com.telesens.afanasiev.model.Identities.Identity;
+import com.telesens.afanasiev.model.identities.Identity;
 
 import java.util.Collection;
 

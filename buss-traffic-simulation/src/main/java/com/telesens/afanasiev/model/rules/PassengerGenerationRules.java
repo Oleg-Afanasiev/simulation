@@ -1,8 +1,8 @@
 package com.telesens.afanasiev.model.rules;
 
-import com.telesens.afanasiev.model.Identities.impl.PassengerGenerationTaskImpl;
+import com.telesens.afanasiev.model.identities.impl.PassengerGenerationTaskImpl;
 import com.telesens.afanasiev.model.helper.DateTimeHelper;
-import com.telesens.afanasiev.model.Identities.PassengerGenerationTask;
+import com.telesens.afanasiev.model.identities.PassengerGenerationTask;
 
 import lombok.Data;
 
@@ -15,7 +15,7 @@ import java.util.*;
 public class PassengerGenerationRules  {
     private static final long serialVersionUID=1L;
 
-    private Map<Long, Deque<PassengerGenerationTaskImpl>> queueGenerationRules;
+    private Map<Long, Deque<PassengerGenerationTask>> queueGenerationRules;
 
     public PassengerGenerationRules() {
         queueGenerationRules = new HashMap<>();
@@ -54,10 +54,16 @@ public class PassengerGenerationRules  {
     }
 
     public PassengerGenerationTask peekRuleForStation(long stationId) {
-        return queueGenerationRules.get(stationId).peek();
+        if (queueGenerationRules.containsKey(stationId))
+            return queueGenerationRules.get(stationId).peek();
+        else
+            return null;
     }
 
     public PassengerGenerationTask pollRuleForStation(long stationId) {
-        return queueGenerationRules.get(stationId).poll();
+        if (queueGenerationRules.containsKey(stationId))
+            return queueGenerationRules.get(stationId).poll();
+        else
+            return null;
     }
 }

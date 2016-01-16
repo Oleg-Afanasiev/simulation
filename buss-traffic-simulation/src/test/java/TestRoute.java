@@ -1,11 +1,12 @@
 
-import com.telesens.afanasiev.model.Identities.Arc;
-import com.telesens.afanasiev.model.Identities.Direct;
-import com.telesens.afanasiev.model.Identities.Route;
-import com.telesens.afanasiev.model.Identities.Station;
-import com.telesens.afanasiev.model.Identities.impl.ArcImpl;
-import com.telesens.afanasiev.model.Identities.impl.RouteImpl;
-import com.telesens.afanasiev.model.Identities.impl.StationImpl;
+import com.telesens.afanasiev.model.identities.Arc;
+import com.telesens.afanasiev.model.identities.Direct;
+import com.telesens.afanasiev.model.identities.Route;
+import com.telesens.afanasiev.model.identities.Station;
+import com.telesens.afanasiev.model.identities.impl.ArcImpl;
+import com.telesens.afanasiev.model.identities.impl.RouteImpl;
+import com.telesens.afanasiev.model.identities.impl.StationImpl;
+import com.telesens.afanasiev.model.helper.DaoUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,7 +43,11 @@ public class TestRoute {
                 new StationImpl("Советская")
         };
 
+        for (int i = 0; i < station.length; i++)
+            DaoUtils.setPrivateId(station[i], i + 1);
+
         lastStation = new StationImpl("Центральный рынок");
+        DaoUtils.setPrivateId(lastStation, station.length + 1);
 
         arcs = new ArrayList<>();
 
@@ -57,6 +62,10 @@ public class TestRoute {
         arcs.add(new ArcImpl<>(station[8], station[9], 11));
         arcs.add(new ArcImpl<>(station[9], station[10], 12));
         arcs.add(new ArcImpl<>(station[10], station[11], 15));
+
+        long id = 1;
+        for (Arc<Station> arc : arcs)
+            DaoUtils.setPrivateId(arc, id++);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -108,7 +117,7 @@ public class TestRoute {
         for (int i = 0; i <= 1000_000; i++) {
             k = random.nextInt(arcs.size()-1) + 1;
             stationName = station[i % arcs.size()].getName();
-            nodeName = route.getNode( (i + k) % arcs.size()).getName();
+            nodeName = route.getNode((i + k) % arcs.size()).getName();
             assertEquals(false, stationName.equals(nodeName));
         }
 

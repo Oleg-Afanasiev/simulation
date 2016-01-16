@@ -1,6 +1,6 @@
-package com.telesens.afanasiev.model.Identities.impl;
+package com.telesens.afanasiev.model.identities.impl;
 
-import com.telesens.afanasiev.model.Identities.Identity;
+import com.telesens.afanasiev.model.identities.Identity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

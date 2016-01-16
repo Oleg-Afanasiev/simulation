@@ -2,7 +2,7 @@ package com.telesens.afanasiev.model.loader;
 
 import com.telesens.afanasiev.dao.RunTaskDAO;
 import com.telesens.afanasiev.dao.impl.jaxb.RunTaskDAOImpl;
-import com.telesens.afanasiev.model.Identities.RunTask;
+import com.telesens.afanasiev.model.identities.RunTask;
 import com.telesens.afanasiev.model.rules.RunTimetable;
 
 import java.util.Collection;

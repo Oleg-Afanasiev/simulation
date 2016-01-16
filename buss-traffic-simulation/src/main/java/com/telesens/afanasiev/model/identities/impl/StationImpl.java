@@ -1,6 +1,6 @@
-package com.telesens.afanasiev.model.Identities.impl;
+package com.telesens.afanasiev.model.identities.impl;
 
-import com.telesens.afanasiev.model.Identities.*;
+import com.telesens.afanasiev.model.identities.*;
 import com.telesens.afanasiev.model.reporter.LogCollector;
 import com.telesens.afanasiev.model.reporter.interfaces.StationReporter;
 
@@ -69,7 +69,7 @@ public class StationImpl extends IdentityImpl implements Station, Observer, Iden
             nextPass.tick(curTime);
             if (nextPass.getLimitTimeWaiting() == 0) {
                 iterator.remove();
-                logCollector.sendStationLogPassLeft(getId(), name, nextPass.getID(), queueOfPassengers.size());
+                logCollector.sendStationLogPassLeft(getId(), name, nextPass.getId(), queueOfPassengers.size());
             }
         }
     }

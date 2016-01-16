@@ -1,4 +1,4 @@
-package com.telesens.afanasiev.model.Identities;
+package com.telesens.afanasiev.model.identities;
 
 import java.util.Iterator;
 
@@ -11,6 +11,7 @@ public interface Route<T> extends Identity, Iterable<Arc<T>> {
     Direct getDirect();
     double getCost();
     T getFirstNode();
+    long getPairRouteId();
 
     void setNumber(String number);
     void setDescription(String description);

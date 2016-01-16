@@ -1,4 +1,4 @@
-package com.telesens.afanasiev.model.Identities;
+package com.telesens.afanasiev.model.identities;
 import com.telesens.afanasiev.model.simulation.Observer;
 
 import java.util.Collection;

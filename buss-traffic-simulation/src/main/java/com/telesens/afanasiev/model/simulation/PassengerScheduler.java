@@ -1,6 +1,6 @@
 package com.telesens.afanasiev.model.simulation;
 
-import com.telesens.afanasiev.model.Identities.*;
+import com.telesens.afanasiev.model.identities.*;
 import com.telesens.afanasiev.model.helper.DaoUtils;
 import com.telesens.afanasiev.model.rules.PassengerGenerationRules;
 
@@ -51,6 +51,9 @@ public class PassengerScheduler implements Observer {
         long stationIdFrom = station.getId();
         PassengerGenerationTask passGenerationTask = passGenerationRules.peekRuleForStation(stationIdFrom);
 
+        if (passGenerationTask == null) // task doesn't exist for this station
+            return;
+
         if (!passGenerationTask.isActual(curTime)) {
             passGenerationRules.pollRuleForStation(stationIdFrom);
             passGenerationTask = passGenerationRules.peekRuleForStation(stationIdFrom);
@@ -61,12 +64,9 @@ public class PassengerScheduler implements Observer {
         if (passengers.size() == 0)
             return;
 
-        try {
-            for (Passenger passenger : passengers)
-                DaoUtils.setPrivateField(passenger, "id", iPassCounter++);
-        } catch (NoSuchFieldException | IllegalAccessException exc) {
-            exc.printStackTrace();
-        }
+        for (Passenger passenger : passengers)
+            DaoUtils.setPrivateId(passenger, iPassCounter++);
+
 
         station.addPassengers(passengers);
     }

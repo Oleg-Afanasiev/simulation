@@ -102,8 +102,8 @@ public class BusRun implements Observer{
 
         int getOffPassCount = bus.getOffPassengers(station, actualTime);
         passDeliveredCount += getOffPassCount;
-        Collection<Passenger> takeInPassengers = new ArrayList<>(); // *?????????????????????????
-        boolean hasNext = false;    // *?????????????????????????
+        Collection<Passenger> takeInPassengers = new ArrayList<>();
+        boolean hasNext = false;
 
         if (arcIterator.hasNext()) {
             hasNext = true;

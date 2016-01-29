@@ -12,8 +12,6 @@ import java.util.Date;
 public class Clock {
     private Date actualTime;
     private ClockReporter reportCollector;
-//    private final int ONE_MINUTE_IN_MILLIS = 60000; //milliseconds
-//    private final int TICK_STEP = 1 * ONE_MINUTE_IN_MILLIS;  // 1 minute
 
     public Clock(Date dateTimeStart) {
         actualTime = DateTimeHelper.roundByMinutes(dateTimeStart);

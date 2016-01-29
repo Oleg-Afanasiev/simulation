@@ -2,14 +2,9 @@ package com.telesens.afanasiev.model.reporter;
 
 import com.telesens.afanasiev.model.helper.DateTimeHelper;
 import com.telesens.afanasiev.model.reporter.interfaces.*;
-import com.telesens.afanasiev.model.reporter.unit.BusLogUnit;
-import com.telesens.afanasiev.model.reporter.unit.PassengerLogUnit;
-import com.telesens.afanasiev.model.reporter.unit.RunLogUnit;
-import com.telesens.afanasiev.model.reporter.unit.StationLogUnit;
+import com.telesens.afanasiev.model.reporter.unit.*;
 
-import java.util.ArrayDeque;
-import java.util.Date;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by oleg on 12/17/15.
@@ -27,6 +22,16 @@ public class LogCollector implements
 
     private boolean isFinishSimulation;
     private Date actualTime;
+
+    // for total statistic
+    private Date startTime;
+    private Date finishTime;
+    private int passTransportedCount;
+    private int passNotTransportedCount;
+    private int runCount;
+    private Set<String> busses;
+    private int maxPossibleTransportedCount; // in percent
+    private int actualTransportedCount;
 
     private LogCollector() {
         queueOfMsgLogs = new ArrayDeque<>();
@@ -62,6 +67,15 @@ public class LogCollector implements
     @Override
     public void sendSimulatorLogStart(Date startTime) {
         this.actualTime = startTime;
+        this.startTime = startTime;
+        this.passTransportedCount = 0;
+        this.passNotTransportedCount = 0;
+        this.runCount = 0;
+        this.maxPossibleTransportedCount = 0;
+        this.actualTransportedCount = 0;
+
+        this.busses = new HashSet<>();
+
         queueOfMsgLogs.add("\n******************************* НАЧАЛО СИМУЛЯЦИИ *******************************\n\n");
 
         saveLogMessage("Время начала:", DateTimeHelper.toString(startTime));
@@ -71,6 +85,7 @@ public class LogCollector implements
     @Override
     public void sendSimulatorLogFinish() {
         isFinishSimulation = true;
+        this.finishTime = actualTime;
         queueOfMsgLogs.add("\n******************************* СИМУЛЯЦИЯ ЗАВЕРШЕНА *******************************\n");
     }
 
@@ -126,12 +141,14 @@ public class LogCollector implements
 
     @Override
     public void sendStationLogPassLeft(long stationId, String stationName, long passId, int queueSize) {
+        passNotTransportedCount++;
         saveLogMessage(String.format("Остановка \"%s\" [ID: %d]", stationName, stationId),
                 String.format("Пассажир [ID = %d] покинул остановку, осталось в очереди: %d", passId, queueSize));
     }
 
     @Override
     public void sendBusLogArriveStation(String busNumber, long stationId, String stationName, int passInsideCount, int freeSeatsCount) {
+        busses.add(busNumber);
         saveLogMessage(String.format("Автобус № %s", busNumber),
                 String.format("Прибыл на остановку \"%s\", кол-во пассажиров в салоне %s, свободных мест %d",
                         stationName, passInsideCount, freeSeatsCount));
@@ -140,6 +157,10 @@ public class LogCollector implements
     @Override
     public void sendBusLogDoStop(String busNumber, long routeId, String routeName, long stationId, String stationName,
                           int getOffPassCount, int takeInPassCount, int passInsideCount, int freeSeatsCount) {
+        passTransportedCount += takeInPassCount;
+        maxPossibleTransportedCount += (passInsideCount + freeSeatsCount);
+        actualTransportedCount += passInsideCount;
+
         saveLogMessage(String.format("Автобус № %s (марш %s [ID: %d])", busNumber, routeName, routeId),
                 String.format("Высадил %d, принял %d, кол-во пассажиров в салоне %s, осталось свободных мест %d",
                         getOffPassCount, takeInPassCount, passInsideCount, freeSeatsCount));
@@ -154,14 +175,15 @@ public class LogCollector implements
     }
 
     @Override
-    public void sendRunLog(long routeId, String routeNumber, String busNumber, Date timeStart, Date timeFinish, int passDeliveredCount) {
+    public void sendRunLog(long routeId, String routeNumber, String busNumber, Date timeStart, Date timeFinish, int passTransportedCount) {
+        runCount++;
         saveLogMessage(String.format("Рейс по маршруту %s [ID: %d]", routeNumber, routeId),
                 String.format("Рейс пройден автобусом %s за %d минут (с %s до %s). Перевезено %d пассажиров",
                         busNumber, DateTimeHelper.diffMinutes(timeStart, timeFinish),
-                        DateTimeHelper.toString(timeStart), DateTimeHelper.toString(timeFinish), passDeliveredCount)
+                        DateTimeHelper.toString(timeStart), DateTimeHelper.toString(timeFinish), passTransportedCount)
         );
 
-        queueOfRunLogs.add(new RunLogUnit(routeId, routeNumber, busNumber, timeStart, timeFinish, passDeliveredCount));
+        queueOfRunLogs.add(new RunLogUnit(routeId, routeNumber, busNumber, timeStart, timeFinish, passTransportedCount));
     }
 
     @Override
@@ -217,6 +239,20 @@ public class LogCollector implements
     @Override
     public StationLogUnit pollStationLog() {
         return queueOfStationLogs.poll();
+    }
+
+    public TotalStatistic getTotalStatistic() {
+        TotalStatistic statistic = new TotalStatistic();
+
+        statistic.setFinishTime(this.finishTime);
+        statistic.setStartTime(this.startTime);
+        statistic.setBussesCount(this.busses.size());
+        statistic.setRunCount(this.runCount);
+        statistic.setPassNotTransportedCount(this.passNotTransportedCount);
+        statistic.setPassTransportedCount(this.passTransportedCount);
+        statistic.setFillingBusses(100.0 * actualTransportedCount / maxPossibleTransportedCount);
+
+        return statistic;
     }
 
     private void saveLogMessage(String src, String msg) {

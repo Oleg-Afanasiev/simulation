@@ -48,10 +48,6 @@ public class RouteDispatcher implements Observer{
     }
 
     public void registerSimpleRoute(Route<Station> routeForward, Route<Station> routeBack) {
-       // if (routeForward.getFirstNode() != routeBack.getLastNode() ||
-           //     routeForward.getLastNode() != routeBack.getFirstNode())
-           // throw new IllegalArgumentException("Incorrect pair of routes.");
-
         this.routeForward = routeForward;
         this.routeBack = routeBack;
     }
